@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\RoutsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,4 +36,18 @@ Route::get('/companies', function () {
 
 Route::get('/users', function () {
     return view('admin/users');
+});
+
+
+
+
+
+Route::controller(RoutsController::class)->group(function () {
+    Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
+    Route::get('/admin/membership', 'membership')->name('admin.membership');
+    Route::get('/admin/payment', 'payment')->name('admin.payment');
+    Route::get('/admin/users', 'users')->name('admin.users');
+    Route::get('/admin/fees', 'fees')->name('admin.fees');
+    Route::get('/admin/companies', 'companies')->name('admin.companies');
+    Route::get('/admin/certification', 'certification')->name('admin.certification');
 });
