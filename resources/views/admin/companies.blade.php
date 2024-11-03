@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <!-- First column -->
                                     <div class="col-md-6 d-flex align-items-center">
-                                        <h5>CONDIDATE PAYMENT DETAILS  </h5>
+                                        <h5>COMPANIES LIST</h5>
                                     </div>
                                     <!-- Second column -->
                                     <div class="col-md-6 d-flex justify-content-end">
@@ -132,37 +132,30 @@
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>IFMP-ID</th>
-                                                <th>CNIC</th>
-                                                <th>Bank Name</th>
-                                                <th>Receipt Date</th>
-                                                <th>Reference Number</th>
-                                                <th>Amount</th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>T-Active</th>
+                                                <th>T-InActive</th>
+                                                <th>Total Dues</th>
+                                                <th>Total Paid</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>IFMP-5425</td>
-                                                <td>44502-5825496-9</td>
-                                                <td>HBL Bank</td>
-                                                <td>05-10-2024</td>
-                                                <td>5421452545485</td>
-                                                <td>30000</td>
-                                                <td class="text-center">
-                                                    <a href="#" class="btn-primary btn-sm mrg"
-                                                        data-placement="top" data-toggle="tooltip"
-                                                        data-original-title="View"><i class="far fa-eye"></i></a>
-                                                    <a href="#" class="btn-warning btn-sm mrg"
-                                                        data-placement="top" data-toggle="tooltip"
-                                                        data-original-title="Edit"><i class="far fa-edit"></i></a>
-                                                    <a href="#"
-                                                        onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')"
-                                                        class="btn-danger btn-sm mrg" data-placement="top"
-                                                        data-toggle="tooltip" data-original-title="Delete"><i
-                                                            class="far fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
+                                           <tr>
+                                               <td>COM-5452</td>
+                                               <td>HBL Bank</td>
+                                               <td>514</td>
+                                               <td>215</td>
+                                               <td>50215</td>
+                                               <td>30000</td>
+                                               <td class="text-center">
+                                                   <a href="view.php" class="btn-primary btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="View"><i class="far fa-eye"></i></a>
+                                                   <a href="edit.php" class="btn-warning btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                                   <a href="#" onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')" class="btn-danger btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+                                               </td>
+                                           </tr>
+
 
                                         </tbody>
                                     </table>
@@ -178,5 +171,4 @@
             <!-- Footer End -->
         </div>
     </div>
-
-   @include('admin-layouts.footer')
+@include('admin-layouts.footer')

@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <!-- First column -->
                                     <div class="col-md-6 d-flex align-items-center">
-                                        <h5>CONDIDATE PAYMENT DETAILS  </h5>
+                                        <h5>CERTIFICATION LIST</h5>
                                     </div>
                                     <!-- Second column -->
                                     <div class="col-md-6 d-flex justify-content-end">
@@ -130,43 +130,35 @@
 
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>IFMP-ID</th>
-                                                <th>CNIC</th>
-                                                <th>Bank Name</th>
-                                                <th>Receipt Date</th>
-                                                <th>Reference Number</th>
-                                                <th>Amount</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>IFMP-5425</td>
-                                                <td>44502-5825496-9</td>
-                                                <td>HBL Bank</td>
-                                                <td>05-10-2024</td>
-                                                <td>5421452545485</td>
-                                                <td>30000</td>
-                                                <td class="text-center">
-                                                    <a href="#" class="btn-primary btn-sm mrg"
-                                                        data-placement="top" data-toggle="tooltip"
-                                                        data-original-title="View"><i class="far fa-eye"></i></a>
-                                                    <a href="#" class="btn-warning btn-sm mrg"
-                                                        data-placement="top" data-toggle="tooltip"
-                                                        data-original-title="Edit"><i class="far fa-edit"></i></a>
-                                                    <a href="#"
-                                                        onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')"
-                                                        class="btn-danger btn-sm mrg" data-placement="top"
-                                                        data-toggle="tooltip" data-original-title="Delete"><i
-                                                            class="far fa-trash-alt"></i></a>
-                                                </td>
-                                            </tr>
+                                      <thead>
+                                        <tr>
+                                           <th>DATE</th>
+                                           <th>IFMP-ID</th>
+                                           <th>CNIC</th>
+                                           <th>CATEGORY</th>
+                                           <th>CERTIFICATION</th>
+                                           <th>VAILD TILL</th>
+                                           <th class="text-center">Action</th>
+                                         </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                            <td>05-02-2024</td>
+                                            <td>IFMP-5425</td>
+                                            <td>42502-2542584-6</td>
+                                            <td>GF</td>
+                                            <td>FCM</td>
+                                            <td>01-06-2024</td>
+                                            <td class="text-center">
+                                              <a href="#" class="btn-primary btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="View"><i class="far fa-eye"></i></a>
+                                              <a href="#" class="btn-warning btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                              <a href="#" onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')" class="btn-danger btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+                                            </td>
+                                          </tr>
 
-                                        </tbody>
+                                       </tbody>
                                     </table>
-                                </div>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -178,5 +170,4 @@
             <!-- Footer End -->
         </div>
     </div>
-
-   @include('admin-layouts.footer')
+@include('admin-layouts.footer')

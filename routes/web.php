@@ -22,3 +22,17 @@ Route::get('/fees', function () {
 Route::get('/payment', function () {
     return view('admin/payment');
 });
+
+
+Route::get('/certification', function () {
+    return view('admin/certification');
+});
+
+Route::get('/companies', function () {
+    return view('admin/companies');
+});
+
+
+Route::get('/users', function () {
+    return view('admin/users');
+});
