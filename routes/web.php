@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\admin\CompaniesController;
-use App\Http\Controllers\admin\RoutsController;
-use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\RoutsController;
+use App\Http\Controllers\admin\CompaniesController;
+use App\Http\Controllers\admin\CertificateController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,7 +52,7 @@ Route::controller(RoutsController::class)->group(function () {
     // Route::get('/admin/users', 'users')->name('admin.users');
     Route::get('/admin/fees', 'fees')->name('admin.fees');
     // Route::get('/admin/companies', 'companies')->name('admin.companies');
-    Route::get('/admin/certification', 'certification')->name('admin.certification');
+    // Route::get('/admin/certification', 'certification')->name('admin.certification');
     Route::get('/admin/add/user', 'add_user')->name('admin.add_user');
 });
 
@@ -71,4 +72,12 @@ Route::get('/admin/companies/delete/{id}', [CompaniesController::class,'delete']
 Route::get('/admin/companies/edit/{id}', [CompaniesController::class,'edit'])->name('admin.edit_company');
 Route::post('/admin/companies/store', [CompaniesController::class,'store'])->name('admin.store_company');
 Route::post('/admin/companies/update/{id}', [CompaniesController::class,'update'])->name('admin.update_company');
+
+
+Route::get('/admin/certificates/index', [CertificateController::class,'index'])->name('admin.certification');
+Route::get('/admin/certificates/create', [CertificateController::class,'create'])->name('admin.certificates.create');
+Route::get('/admin/certificates/delete/{id}', [CertificateController::class,'delete'])->name('admin.delete_certificate');
+Route::get('/admin/certificates/edit/{id}', [CertificateController::class,'edit'])->name('admin.edit_certificate');
+Route::post('/admin/certificates/store', [CertificateController::class,'store'])->name('admin.store_certificate');
+Route::post('/admin/certificates/update/{id}', [CertificateController::class,'update'])->name('admin.update_certificate');
 

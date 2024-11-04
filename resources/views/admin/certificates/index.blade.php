@@ -18,7 +18,7 @@
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-           @include('admin-layouts.navbar')
+            @include('admin-layouts.navbar')
             <!-- Navbar End -->
 
 
@@ -37,11 +37,11 @@
                                 <div class="row">
                                     <!-- First column -->
                                     <div class="col-md-6 d-flex align-items-center">
-                                        <h5>COMPANIES LIST</h5>
+                                        <h5>CERTIFICATION LIST</h5>
                                     </div>
                                     <!-- Second column -->
                                     <div class="col-md-6 d-flex justify-content-end">
-                                        <a href="{{route('admin.companies.create')}}">
+                                        <a href="{{route('admin.certificates.create')}}">
                                             <button type="button" class="btn btn-primary btn-sm">Add New</button>
                                         </a>
                                     </div>
@@ -73,52 +73,52 @@
 
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-
-                                                <th>Name</th>
-                                                <th>T-Active</th>
-                                                <th>T-InActive</th>
-                                                <th>Total Dues</th>
-                                                <th>Total Paid</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                           {{-- <tr>
-                                               <td>COM-5452</td>
-                                               <td>HBL Bank</td>
-                                               <td>514</td>
-                                               <td>215</td>
-                                               <td>50215</td>
-                                               <td>30000</td>
-                                               <td class="text-center">
-                                                   <a href="view.php" class="btn-primary btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="View"><i class="far fa-eye"></i></a>
-                                                   <a href="edit.php" class="btn-warning btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="far fa-edit"></i></a>
-                                                   <a href="#" onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')" class="btn-danger btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
-                                               </td>
-                                           </tr> --}}
-
-                                           @foreach ($companies as $company)
-                                           <tr>
-                                             <td>{{$company->name}}</td>
-                                             <td>{{$company->t_active}}</td>
-                                             <td>{{$company->t_inactive}}</td>
-                                             <td>{{$company->total_dues}}</td>
-                                             <td>{{$company->total_paid}}</td>
-                                             <td class="text-center">
-                                                <a href="{{route('admin.delete_company',$company->id)}}" class="btn-danger btn-sm mrg"
-                                                   data-placement="top" data-toggle="tooltip"
-                                                   data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
-                                                <a href="{{route('admin.edit_company',$company->id)}}" class="btn-warning btn-sm mrg"
-                                                   data-placement="top" data-toggle="tooltip"
-                                                   data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                      <thead>
+                                        <tr>
+                                           <th>DATE</th>
+                                           <th>IFMP-ID</th>
+                                           <th>CNIC</th>
+                                           <th>CATEGORY</th>
+                                           <th>CERTIFICATION</th>
+                                           <th>VAILD TILL</th>
+                                           <th class="text-center">Action</th>
+                                         </tr>
+                                       </thead>
+                                       <tbody>
+                                          {{-- <tr>
+                                            <td>05-02-2024</td>
+                                            <td>IFMP-5425</td>
+                                            <td>42502-2542584-6</td>
+                                            <td>GF</td>
+                                            <td>FCM</td>
+                                            <td>01-06-2024</td>
+                                            <td class="text-center">
+                                              <a href="#" class="btn-primary btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="View"><i class="far fa-eye"></i></a>
+                                              <a href="#" class="btn-warning btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                              <a href="#" onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')" class="btn-danger btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
                                             </td>
-                                           </tr>
-                                        @endforeach
-                                        </tbody>
+                                          </tr> --}}
+                                          @foreach ($certificates as $certificate)
+                                              <tr>
+                                                <td>{{ $certificate->created_at->format('d-m-Y') }}</td>
+                                                <td>{{ $certificate->ifmp_id }}</td>
+                                                <td>{{ $certificate->cnic }}</td>
+                                                <td>{{ $certificate->category }}</td>
+                                                <td>{{ $certificate->certification }}</td>
+                                                <td>{{ $certificate->valid_till }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{route('admin.delete_certificate',$certificate->id)}}" class="btn-danger btn-sm mrg"
+                                                       data-placement="top" data-toggle="tooltip"
+                                                       data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+                                                    <a href="{{route('admin.edit_certificate',$certificate->id)}}" class="btn-warning btn-sm mrg"
+                                                       data-placement="top" data-toggle="tooltip"
+                                                       data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                                </td>
+                                              </tr>
+                                          @endforeach
+                                       </tbody>
                                     </table>
-                                </div>
+                                  </div>
                             </div>
                         </div>
                     </div>
