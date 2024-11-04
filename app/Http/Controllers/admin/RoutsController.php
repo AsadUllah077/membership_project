@@ -28,4 +28,12 @@ class RoutsController extends Controller
     public function payment(){
         return view('admin/payment');
     }
+
+    public function certification(){
+        return view('admin/certification');
+    }
+
+    public function add_user(){
+        return view('admin/add_user');
+    }
 }
