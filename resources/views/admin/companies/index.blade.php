@@ -70,7 +70,7 @@
                                     <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+
                                                 <th>Name</th>
                                                 <th>T-Active</th>
                                                 <th>T-InActive</th>
@@ -93,16 +93,24 @@
                                                    <a href="#" onclick="return confirm('you are about to delete a record. This cannot be undone. are you sure?')" class="btn-danger btn-sm mrg" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
                                                </td>
                                            </tr> --}}
-                                           @foreach ($companies as $company)
-                                              <tr>
-                                                <td>$company->name</td>
-                                                <td>$company->t_active</td>
-                                                <td>$company->t_inactive</td>
-                                                <td>$company->total_dues</td>
-                                                <td>$company->total_paid</td>
-                                              </tr>
-                                           @endforeach
 
+                                           @foreach ($companies as $company)
+                                           <tr>
+                                             <td>{{$company->name}}</td>
+                                             <td>{{$company->t_active}}</td>
+                                             <td>{{$company->t_inactive}}</td>
+                                             <td>{{$company->total_dues}}</td>
+                                             <td>{{$company->total_paid}}</td>
+                                             <td class="text-center">
+                                                <a href="{{route('admin.delete_company',$company->id)}}" class="btn-danger btn-sm mrg"
+                                                   data-placement="top" data-toggle="tooltip"
+                                                   data-original-title="Delete"><i class="far fa-trash-alt"></i></a>
+                                                <a href="{{route('admin.edit_company',$company->id)}}" class="btn-warning btn-sm mrg"
+                                                   data-placement="top" data-toggle="tooltip"
+                                                   data-original-title="Edit"><i class="far fa-edit"></i></a>
+                                            </td>
+                                           </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
