@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\RoutsController;
 use App\Http\Controllers\admin\CompaniesController;
 use App\Http\Controllers\admin\CertificateController;
+use App\Http\Controllers\admin\PaymentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,12 +49,12 @@ Route::get('/users', function () {
 Route::controller(RoutsController::class)->group(function () {
     Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
     Route::get('/admin/membership', 'membership')->name('admin.membership');
-    Route::get('/admin/payment', 'payment')->name('admin.payment');
+    // Route::get('/admin/payment', 'payment')->name('admin.payment');
     // Route::get('/admin/users', 'users')->name('admin.users');
     Route::get('/admin/fees', 'fees')->name('admin.fees');
     // Route::get('/admin/companies', 'companies')->name('admin.companies');
     // Route::get('/admin/certification', 'certification')->name('admin.certification');
-    Route::get('/admin/add/user', 'add_user')->name('admin.add_user');
+    // Route::get('/admin/add/user', 'add_user')->name('admin.add_user');
 });
 
 
@@ -80,4 +81,13 @@ Route::get('/admin/certificates/delete/{id}', [CertificateController::class,'del
 Route::get('/admin/certificates/edit/{id}', [CertificateController::class,'edit'])->name('admin.edit_certificate');
 Route::post('/admin/certificates/store', [CertificateController::class,'store'])->name('admin.store_certificate');
 Route::post('/admin/certificates/update/{id}', [CertificateController::class,'update'])->name('admin.update_certificate');
+
+
+
+Route::get('/admin/payments/index', [PaymentController::class,'index'])->name('admin.payment');
+Route::get('/admin/payments/create', [PaymentController::class,'create'])->name('admin.payment.create');
+Route::get('/admin/payments/delete/{id}', [PaymentController::class,'delete'])->name('admin.delete_payment');
+Route::get('/admin/payments/edit/{id}', [PaymentController::class,'edit'])->name('admin.edit_payment');
+Route::post('/admin/payments/store', [PaymentController::class,'store'])->name('admin.store_payment');
+Route::post('/admin/payments/update/{id}', [PaymentController::class,'update'])->name('admin.update_payment');
 
