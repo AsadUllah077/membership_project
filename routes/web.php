@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\RoutsController;
 use App\Http\Controllers\admin\CompaniesController;
 use App\Http\Controllers\admin\CertificateController;
+use App\Http\Controllers\admin\FeesController;
 use App\Http\Controllers\admin\PaymentController;
 
 Route::get('/', function () {
@@ -51,7 +52,7 @@ Route::controller(RoutsController::class)->group(function () {
     Route::get('/admin/membership', 'membership')->name('admin.membership');
     // Route::get('/admin/payment', 'payment')->name('admin.payment');
     // Route::get('/admin/users', 'users')->name('admin.users');
-    Route::get('/admin/fees', 'fees')->name('admin.fees');
+    // Route::get('/admin/fees', 'fees')->name('admin.fees');
     // Route::get('/admin/companies', 'companies')->name('admin.companies');
     // Route::get('/admin/certification', 'certification')->name('admin.certification');
     // Route::get('/admin/add/user', 'add_user')->name('admin.add_user');
@@ -90,4 +91,13 @@ Route::get('/admin/payments/delete/{id}', [PaymentController::class,'delete'])->
 Route::get('/admin/payments/edit/{id}', [PaymentController::class,'edit'])->name('admin.edit_payment');
 Route::post('/admin/payments/store', [PaymentController::class,'store'])->name('admin.store_payment');
 Route::post('/admin/payments/update/{id}', [PaymentController::class,'update'])->name('admin.update_payment');
+
+
+
+Route::get('/admin/fees/index', [FeesController::class,'index'])->name('admin.fees');
+Route::get('/admin/fees/create', [FeesController::class,'create'])->name('admin.fees.create');
+Route::get('/admin/fees/delete/{id}', [FeesController::class,'delete'])->name('admin.delete_fees');
+Route::get('/admin/fees/edit/{id}', [FeesController::class,'edit'])->name('admin.edit_fees');
+Route::post('/admin/fees/store', [FeesController::class,'store'])->name('admin.store_fees');
+Route::post('/admin/fees/update/{id}', [FeesController::class,'update'])->name('admin.update_fees');
 
