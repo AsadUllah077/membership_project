@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Membership;
 use Illuminate\Database\Eloquent\Model;
 
 class Certificate extends Model
@@ -14,4 +15,9 @@ class Certificate extends Model
         'ifmp_id'
 
     ];
+
+    public function membership()
+    {
+        return $this->hasMany(Membership::class, 'certificate_id');
+    }
 }

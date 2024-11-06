@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\RoutsController;
 use App\Http\Controllers\admin\CompaniesController;
 use App\Http\Controllers\admin\CertificateController;
 use App\Http\Controllers\admin\FeesController;
+use App\Http\Controllers\admin\MembershipController;
 use App\Http\Controllers\admin\PaymentController;
 
 Route::get('/', function () {
@@ -100,4 +101,14 @@ Route::get('/admin/fees/delete/{id}', [FeesController::class,'delete'])->name('a
 Route::get('/admin/fees/edit/{id}', [FeesController::class,'edit'])->name('admin.edit_fees');
 Route::post('/admin/fees/store', [FeesController::class,'store'])->name('admin.store_fees');
 Route::post('/admin/fees/update/{id}', [FeesController::class,'update'])->name('admin.update_fees');
+
+
+
+Route::get('/admin/membership/index', [MembershipController::class,'index'])->name('admin.membership');
+Route::get('/admin/membership/create', [MembershipController::class,'create'])->name('admin.membership.create');
+Route::get('/admin/membership/delete/{id}', [MembershipController::class,'delete'])->name('admin.delete_membership');
+Route::get('/admin/membership/edit/{id}', [MembershipController::class,'edit'])->name('admin.edit_membership');
+Route::post('/admin/membership/store', [MembershipController::class,'store'])->name('admin.store_membership');
+Route::post('/admin/membership/update/{id}', [MembershipController::class,'update'])->name('admin.update_membership');
+
 
