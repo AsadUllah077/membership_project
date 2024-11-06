@@ -18,6 +18,26 @@ class UserController extends Controller
         return view('admin/users_create');
     }
 
+
+    public function login(Request $request) {
+        // Validate the incoming request data
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+        // Attempt to authenticate the user
+        if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Authentication was successful; redirect to the admin dashboard
+            return redirect()->route('admin.dashboard');
+        }
+
+        // Authentication failed; redirect back with an error message
+        return redirect()->route('login');
+
+    }
+
+
     public function store(Request $request){
         $validator = $request->validate([
             'name' => ['required', 'string', 'max:255'],

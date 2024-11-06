@@ -17,24 +17,35 @@
             </div>
         </div> --}}
         <div class="navbar-nav w-100">
-            <a href="{{route('admin.dashboard')}}" class="nav-item nav-link active"><i
-                    class="fa fa-tachometer-alt me-2"></i>Dashbaord</a>
-            {{-- <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
-                        class="fa fa-laptop me-2"></i>Elements</a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a href="button.html" class="dropdown-item">Buttons</a>
-                    <a href="typography.html" class="dropdown-item">Typography</a>
-                    <a href="element.html" class="dropdown-item">Other Elements</a>
-                </div>
-            </div> --}}
-            <a href="{{route('admin.membership')}}" class="nav-item nav-link"><i class="fas fa-handshake"></i>Membership</a>
-            <a href="{{route('admin.fees')}}" class="nav-item nav-link"><i class="fas fa-credit-card"></i>Fees</a>
-            <a href="{{route('admin.payment')}}" class="nav-item nav-link"><i class="fas fa-briefcase"></i>Payments</a>
-            <a href="{{route('admin.certification')}}" class="nav-item nav-link"><i class="fas fa-certificate"></i>e-Certificates</a>
-            <a href="{{route('admin.companies')}}" class="nav-item nav-link"><i class="fas fa-school"></i>Companies</a>
-            <a href="{{route('admin.users')}}" class="nav-item nav-link"><i class="fas fa-user-tie"></i>Users</a>
-
+            <a href="{{ route('admin.dashboard') }}"
+               class="nav-item nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+            </a>
+            <a href="{{ route('admin.membership') }}"
+               class="nav-item nav-link {{ Request::is('admin/membership/index') ? 'active' : '' }}">
+                <i class="fas fa-handshake"></i>Membership
+            </a>
+            <a href="{{ route('admin.fees') }}"
+               class="nav-item nav-link {{ Request::is('admin/fees/index') ? 'active' : '' }}">
+                <i class="fas fa-credit-card"></i>Fees
+            </a>
+            <a href="{{ route('admin.payment') }}"
+               class="nav-item nav-link {{ Request::is('admin/payments/index') ? 'active' : '' }}">
+                <i class="fas fa-briefcase"></i>Payments
+            </a>
+            <a href="{{ route('admin.certification') }}"
+               class="nav-item nav-link {{ Request::is('admin/certificates/index') ? 'active' : '' }}">
+                <i class="fas fa-certificate"></i>e-Certificates
+            </a>
+            <a href="{{ route('admin.companies') }}"
+               class="nav-item nav-link {{ Request::is('admin/companies') ? 'active' : '' }}">
+                <i class="fas fa-school"></i>Companies
+            </a>
+            <a href="{{ route('admin.users') }}"
+               class="nav-item nav-link {{ Request::is('admin/users') ? 'active' : '' }}">
+                <i class="fas fa-user-tie"></i>Users
+            </a>
         </div>
+
     </nav>
 </div>

@@ -10,39 +10,10 @@ use App\Http\Controllers\admin\MembershipController;
 use App\Http\Controllers\admin\PaymentController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('admin/index');
+    return view('login');
 });
 
 
-Route::get('/membership', function () {
-    return view('admin/membership');
-});
-
-Route::get('/fees', function () {
-    return view('admin/fees');
-});
-
-Route::get('/payment', function () {
-    return view('admin/payment');
-});
-
-
-Route::get('/certification', function () {
-    return view('admin/certification');
-});
-
-Route::get('/companies', function () {
-    return view('admin/companies');
-});
-
-
-Route::get('/users', function () {
-    return view('admin/users');
-});
 
 
 
@@ -50,17 +21,11 @@ Route::get('/users', function () {
 
 Route::controller(RoutsController::class)->group(function () {
     Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
-    Route::get('/admin/membership', 'membership')->name('admin.membership');
-    // Route::get('/admin/payment', 'payment')->name('admin.payment');
-    // Route::get('/admin/users', 'users')->name('admin.users');
-    // Route::get('/admin/fees', 'fees')->name('admin.fees');
-    // Route::get('/admin/companies', 'companies')->name('admin.companies');
-    // Route::get('/admin/certification', 'certification')->name('admin.certification');
-    // Route::get('/admin/add/user', 'add_user')->name('admin.add_user');
 });
 
 
 
+Route::post('/admin/login', [UserController::class,'login'])->name('admin.login');
 Route::get('/admin/users', [UserController::class,'index'])->name('admin.users');
 Route::get('/admin/users/create', [UserController::class,'create'])->name('admin.create_user');
 Route::get('/admin/users/delete/{id}', [UserController::class,'delete'])->name('admin.delete_user');
