@@ -63,6 +63,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/payments/store', [PaymentController::class, 'store'])->name('admin.store_payment');
     Route::post('/admin/payments/update/{id}', [PaymentController::class, 'update'])->name('admin.update_payment');
 
+    Route::get('admin/payments/export/csv', [PaymentController::class, 'exportCsv'])->name('admin.payments.export.csv');
+    Route::get('admin/payments/export/excel', [PaymentController::class, 'exportExcel'])->name('admin.payments.export.excel');
+    Route::get('admin/payments/export/pdf', [PaymentController::class, 'exportPdf'])->name('admin.payments.export.pdf');
+
 
 
     Route::get('/admin/fees/index', [FeesController::class, 'index'])->name('admin.fees');
