@@ -11,7 +11,7 @@ class CertificateController extends Controller
     public function index()
     {
 
-        $certificates = Certificate::all();
+        $certificates = Certificate::paginate(10);
         return view('admin/certificates/index', compact('certificates'));
     }
 

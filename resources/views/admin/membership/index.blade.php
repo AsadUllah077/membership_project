@@ -144,7 +144,28 @@
                             </div>
                             <div class="card-body table-border-style">
 
-
+                                <div class="row mb-2">
+                                    <!-- Search bar -->
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <form class="input-group input-group-sm" method="GET" action="{{ route('admin.membership') }}">
+                                            <input
+                                                class="form-control"
+                                                type="search"
+                                                name="search"
+                                                placeholder="Search"
+                                                aria-label="Search"
+                                                value="{{ request()->input('search') }}"
+                                            />
+                                            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+                                        </form>
+                                    </div>
+                                    <!-- Export buttons aligned to the right -->
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                        <button class="btn btn-outline-danger btn-sm">PDF</button>
+                                        <button class="btn btn-outline-success btn-sm">CSV</button>
+                                        <button class="btn btn-outline-primary btn-sm">Excel</button>
+                                    </div>
+                                </div>
 
 
                                     <div class="table-responsive">
@@ -190,6 +211,8 @@
 
                                             </tbody>
                                         </table>
+                                        {{ $membership->links('pagination::bootstrap-5') }}
+
                                     </div>
                             </div>
                         </div>

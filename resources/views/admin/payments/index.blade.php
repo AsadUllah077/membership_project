@@ -44,7 +44,7 @@
 
                             </div>
                             <div class="card-body table-border-style">
-                                {{-- <div class="row mb-2">
+                                <div class="row mb-2">
                                     <!-- Search bar -->
                                     <div class="col-md-6 d-flex align-items-center">
                                         <form class="input-group input-group-sm">
@@ -62,7 +62,7 @@
                                         <button class="btn btn-outline-info btn-sm">Copy</button>
                                         <button class="btn btn-outline-secondary btn-sm">Print</button>
                                     </div>
-                                </div> --}}
+                                </div>
 
 
 
@@ -104,6 +104,7 @@
 
                                         </tbody>
                                     </table>
+                                    {{ $payments->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                         </div>

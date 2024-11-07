@@ -11,21 +11,31 @@ use PHPUnit\Framework\Attributes\Medium;
 
 class MembershipController extends Controller
 {
-    public function index(){
+    public function index(Request $request)
+    {
+        $search = $request->input('search'); // Get the search input
+
+        // Filter memberships based on search query
+        $membership = Membership::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
+                // Add more conditions as needed
+        })->paginate(10);
 
         $certificates = Certificate::all();
-        $membership = Membership::all();
-        $active_users =User::where('status', 'active')->count();
+        $active_users = User::where('status', 'active')->count();
         $users = User::count();
-        return view('admin/membership/index',compact('certificates','membership','active_users','users'));
+
+        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search'));
     }
 
-    public function create(){
+    public function create()
+    {
         $certificates = Certificate::all();
-        return view('admin/membership/membership_create',compact('certificates'));
+        return view('admin/membership/membership_create', compact('certificates'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
             'balance' => ['required', 'integer'],
@@ -53,15 +63,17 @@ class MembershipController extends Controller
         return redirect()->route('admin.membership')->with('success', 'membership created successfully.');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $membership = Membership::find($id);
         $certificates = Certificate::all();
-        return view('admin/membership/membership_edit', compact('certificates','membership'));
+        return view('admin/membership/membership_edit', compact('certificates', 'membership'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validator = $request->validate([
-          'ifmp_id' => ['required', 'string', 'max:255'],
+            'ifmp_id' => ['required', 'string', 'max:255'],
             'balance' => ['required', 'integer'],
             'certificate_id' => ['required', 'integer'],
             'dues' => ['required', 'integer'],
@@ -87,7 +99,8 @@ class MembershipController extends Controller
         return redirect()->route('admin.membership')->with('success', 'membership updated successfully.');
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         Membership::destroy($id);
         return redirect()->route('admin.membership')->with('success', 'membership deleted successfully.');
     }

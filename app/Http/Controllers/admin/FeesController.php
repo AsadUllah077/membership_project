@@ -12,7 +12,7 @@ class FeesController extends Controller
     public function index()
     {
 
-        $fees = Fees::all();
+        $fees = Fees::paginate(10);
         $all_fees = Fees::count();
         $paid_fees = Fees::where('status', 'paid')->count();
         $unpaid_fees = Fees::where('status', 'unpaid')->count();
