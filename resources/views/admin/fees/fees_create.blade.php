@@ -65,10 +65,9 @@
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-control form-select" required>
                         <option value="">Select Status</option>
-                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="inprogress" {{ old('status') == 'inprogress' ? 'selected' : '' }}>In Progress
-                        </option>
-                        <option value="complete" {{ old('status') == 'complete' ? 'selected' : '' }}>Complete</option>
+                        <option value="paid" {{ old('status') == 'paid' ? 'selected' : '' }}>paid</option>
+
+                        <option value="unpaid" {{ old('status') == 'unpaid' ? 'selected' : '' }}>unpaid</option>
                     </select>
                     @error('status')
                         <div class="text-danger">{{ $message }}</div>

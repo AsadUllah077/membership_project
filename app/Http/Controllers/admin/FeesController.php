@@ -13,7 +13,10 @@ class FeesController extends Controller
     {
 
         $fees = Fees::all();
-        return view('admin/fees/index', compact('fees'));
+        $all_fees = Fees::count();
+        $paid_fees = Fees::where('status', 'paid')->count();
+        $unpaid_fees = Fees::where('status', 'unpaid')->count();
+        return view('admin/fees/index', compact('fees','all_fees','paid_fees','unpaid_fees'));
     }
 
     public function create()

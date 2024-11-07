@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Fees;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RoutsController extends Controller
 {
     public function dashboard(){
-        return view('admin/index');
+        $active_users =User::where('status', 'active')->count();
+        $users = User::count();
+        $all_fees = Fees::count();
+        $paid_fees = Fees::where('status', 'paid')->count();
+        $unpaid_fees = Fees::where('status', 'unpaid')->count();
+        return view('admin/index', compact('users','active_users','paid_fees','unpaid_fees','all_fees'));
     }
 
     public function membership(){

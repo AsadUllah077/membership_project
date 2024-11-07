@@ -6,6 +6,7 @@ use App\Models\Membership;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use PHPUnit\Framework\Attributes\Medium;
 
 class MembershipController extends Controller
@@ -14,7 +15,9 @@ class MembershipController extends Controller
 
         $certificates = Certificate::all();
         $membership = Membership::all();
-        return view('admin/membership/index',compact('certificates','membership'));
+        $active_users =User::where('status', 'active')->count();
+        $users = User::count();
+        return view('admin/membership/index',compact('certificates','membership','active_users','users'));
     }
 
     public function create(){

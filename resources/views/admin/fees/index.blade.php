@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h2>278</h2>
+                                            <h2>{{$all_fees}}</h2>
                                             <span>Total Fees</span>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h3>278</h3>
+                                            <h3>{{$paid_fees}}</h3>
                                             <span>Total Paid</span>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h3>278</h3>
+                                            <h3>{{$unpaid_fees}}</h3>
                                             <span>Total Unpaid</span>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="col-xl-3 col-sm-6 col-12">
+                    {{-- <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card bg-info">
                             <div class="card-content">
                                 <div class="card-body">
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fas fa-shopping-cart"></i>

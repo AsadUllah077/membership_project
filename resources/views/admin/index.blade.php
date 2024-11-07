@@ -27,7 +27,7 @@
             <!-- Sale & Revenue Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
+                    {{-- <div class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fas fa-shopping-cart"></i>
                             <div class="ms-3">
@@ -71,31 +71,88 @@
                                 <h6 class="mb-0">$1234</h6>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fas fa-users"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Non Member</p>
-                                <h6 class="mb-0">$1234</h6>
+                    </div> --}}
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-primary">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h2>{{$users}}</h2>
+                                            <span>Total Members</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fas fa-ticket-alt"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Ticket Resolved</p>
-                                <h6 class="mb-0">$1234</h6>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-warning">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h3>{{$users - $active_users}}</h3>
+                                            <span>InActive Members</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fas fa-dollar-sign"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Revenue Today</p>
-                                <h6 class="mb-0">$1234</h6>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-success">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h3>{{$active_users}}</h3>
+                                            <span>Active Members</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-secondary">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h2>{{$all_fees}}</h2>
+                                            <span>Total Fees</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-info">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h3>{{$paid_fees}}</h3>
+                                            <span>Total Paid</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card bg-danger">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="media-body text-center text-white">
+                                            <h3>{{$unpaid_fees}}</h3>
+                                            <span>Total Unpaid</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

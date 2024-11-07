@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h2>278</h2>
+                                            <h2>{{$users}}</h2>
                                             <span>Total Members</span>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h3>278</h3>
+                                            <h3>{{$active_users}}</h3>
                                             <span>Active Members</span>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                 <div class="card-body">
                                     <div class="media d-flex">
                                         <div class="media-body text-center text-white">
-                                            <h3>278</h3>
+                                            <h3>{{$users - $active_users}}</h3>
                                             <span>InActive Members</span>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="col-xl-3 col-sm-6 col-12">
+                    {{-- <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card bg-info">
                             <div class="card-content">
                                 <div class="card-body">
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="row g-4 mt-2">
