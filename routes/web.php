@@ -80,4 +80,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/membership/edit/{id}', [MembershipController::class, 'edit'])->name('admin.edit_membership');
     Route::post('/admin/membership/store', [MembershipController::class, 'store'])->name('admin.store_membership');
     Route::post('/admin/membership/update/{id}', [MembershipController::class, 'update'])->name('admin.update_membership');
+
+    Route::get('admin/membership/export/csv', [MembershipController::class, 'exportCsv'])->name('admin.membership.export.csv');
+    Route::get('admin/membership/export/excel', [MembershipController::class, 'exportExcel'])->name('admin.membership.export.excel');
+    Route::get('admin/membership/export/pdf', [MembershipController::class, 'exportPdf'])->name('admin.membership.export.pdf');
 });

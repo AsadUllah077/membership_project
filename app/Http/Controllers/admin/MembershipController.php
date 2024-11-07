@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use PHPUnit\Framework\Attributes\Medium;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class MembershipController extends Controller
 {
     public function index(Request $request)
@@ -18,7 +23,7 @@ class MembershipController extends Controller
         // Filter memberships based on search query
         $membership = Membership::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
-                // Add more conditions as needed
+            // Add more conditions as needed
         })->paginate(10);
 
         $certificates = Certificate::all();
@@ -103,5 +108,99 @@ class MembershipController extends Controller
     {
         Membership::destroy($id);
         return redirect()->route('admin.membership')->with('success', 'membership deleted successfully.');
+    }
+
+    public function exportCsv()
+    {
+        $filename = "membership_list.csv";
+        $memberships = Membership::all();
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $columns = ['IFMP-ID', 'Name', 'CNIC', 'Certification', 'Status', 'Dues', 'Balance', 'M-Date', 'Valid Till'];
+
+        $callback = function () use ($memberships, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($memberships as $member) {
+                fputcsv($file, [
+                    $member->ifmp_id,
+                    $member->name,
+                    $member->cnic,
+                    $member->certificate ? $member->certificate->certification : 'N/A',
+                    $member->status,
+                    $member->dues,
+                    $member->balance,
+                    $member->m_date,
+                    $member->valid_till,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'IFMP-ID')
+            ->setCellValue('B1', 'Name')
+            ->setCellValue('C1', 'CNIC')
+            ->setCellValue('D1', 'Certification')
+            ->setCellValue('E1', 'Status')
+            ->setCellValue('F1', 'Dues')
+            ->setCellValue('G1', 'Balance')
+            ->setCellValue('H1', 'M-Date')
+            ->setCellValue('I1', 'Valid Till');
+
+        $memberships = Membership::all();
+        $row = 2;
+
+        foreach ($memberships as $member) {
+            $sheet->setCellValue("A$row", $member->ifmp_id)
+                ->setCellValue("B$row", $member->name)
+                ->setCellValue("C$row", $member->cnic)
+                ->setCellValue("D$row", $member->certificate ? $member->certificate->certification : 'N/A')
+                ->setCellValue("E$row", $member->status)
+                ->setCellValue("F$row", $member->dues)
+                ->setCellValue("G$row", $member->balance)
+                ->setCellValue("H$row", $member->m_date)
+                ->setCellValue("I$row", $member->valid_till);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = "membership_list.xlsx";
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+
+        $writer->save("php://output");
+    }
+    public function exportPdf()
+    {
+        $memberships = Membership::all();
+
+        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        $html = view('admin.membership.pdf', compact('memberships'))->render();
+        $pdf->loadHtml($html);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->render();
+
+        return $pdf->stream("membership_list.pdf", ["Attachment" => true]);
     }
 }
