@@ -73,6 +73,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/fees/update/{id}', [FeesController::class, 'update'])->name('admin.update_fees');
 
 
+    Route::get('admin/fees/export/csv', [FeesController::class, 'exportCsv'])->name('admin.fees.export.csv');
+    Route::get('admin/fees/export/excel', [FeesController::class, 'exportExcel'])->name('admin.fees.export.excel');
+    Route::get('admin/fees/export/pdf', [FeesController::class, 'exportPdf'])->name('admin.fees.export.pdf');
+
+
 
     Route::get('/admin/membership/index', [MembershipController::class, 'index'])->name('admin.membership');
     Route::get('/admin/membership/create', [MembershipController::class, 'create'])->name('admin.membership.create');
