@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/users/store', [UserController::class, 'store'])->name('admin.store_user');
     Route::post('/admin/users/update/{id}', [UserController::class, 'update'])->name('admin.update_user');
 
+    //export routs
+    Route::get('admin/users/export/csv', [UserController::class, 'exportCsv'])->name('admin.users.export.csv');
+    Route::get('admin/users/export/excel', [UserController::class, 'exportExcel'])->name('admin.users.export.excel');
+    Route::get('admin/users/export/pdf', [UserController::class, 'exportPdf'])->name('admin.users.export.pdf');
+
 
     Route::get('/admin/companies', [CompaniesController::class, 'index'])->name('admin.companies');
     Route::get('/admin/companies/create', [CompaniesController::class, 'create'])->name('admin.companies.create');
@@ -47,12 +52,25 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/companies/update/{id}', [CompaniesController::class, 'update'])->name('admin.update_company');
 
 
+    //export routs
+    Route::get('admin/companies/export/csv', [CompaniesController::class, 'exportCsv'])->name('admin.companies.export.csv');
+    Route::get('admin/companies/export/excel', [CompaniesController::class, 'exportExcel'])->name('admin.companies.export.excel');
+    Route::get('admin/companies/export/pdf', [CompaniesController::class, 'exportPdf'])->name('admin.companies.export.pdf');
+
+
+
     Route::get('/admin/certificates/index', [CertificateController::class, 'index'])->name('admin.certification');
     Route::get('/admin/certificates/create', [CertificateController::class, 'create'])->name('admin.certificates.create');
     Route::get('/admin/certificates/delete/{id}', [CertificateController::class, 'delete'])->name('admin.delete_certificate');
     Route::get('/admin/certificates/edit/{id}', [CertificateController::class, 'edit'])->name('admin.edit_certificate');
     Route::post('/admin/certificates/store', [CertificateController::class, 'store'])->name('admin.store_certificate');
     Route::post('/admin/certificates/update/{id}', [CertificateController::class, 'update'])->name('admin.update_certificate');
+
+
+    //export routs
+    Route::get('admin/certificates/export/csv', [CertificateController::class, 'exportCsv'])->name('admin.certificates.export.csv');
+    Route::get('admin/certificates/export/excel', [CertificateController::class, 'exportExcel'])->name('admin.certificates.export.excel');
+    Route::get('admin/certificates/export/pdf', [CertificateController::class, 'exportPdf'])->name('admin.certificates.export.pdf');
 
 
 

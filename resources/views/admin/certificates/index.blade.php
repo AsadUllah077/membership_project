@@ -69,6 +69,28 @@
                                     </div>
                                 </div> --}}
 
+                                <div class="row mb-2">
+                                    <!-- Search bar -->
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <form class="input-group input-group-sm" method="GET"
+                                            action="{{ route('admin.certification') }}">
+                                            <input class="form-control" type="search" name="search" placeholder="Search"
+                                                aria-label="Search" value="{{ request()->input('search') }}" />
+                                            <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+                                        </form>
+                                    </div>
+                                    <!-- Export buttons aligned to the right -->
+                                    <div class="col-md-6 d-flex justify-content-end">
+                                        <a href="{{ route('admin.certificates.export.csv') }}"
+                                            class="btn btn-outline-danger btn-sm">CSV</a>
+                                        <a href="{{ route('admin.certificates.export.excel') }}"
+                                            class="btn btn-outline-primary btn-sm">Excel</a>
+                                        <a href="{{ route('admin.certificates.export.pdf') }}"
+                                            class="btn btn-outline-success btn-sm">PDF</a>
+                                    </div>
+
+                                </div>
+
 
 
                                 <div class="table-responsive">

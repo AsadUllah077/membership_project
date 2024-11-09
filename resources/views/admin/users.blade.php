@@ -50,24 +50,28 @@
 
                         </div>
                         <div class="card-body table-border-style">
-                            {{-- <div class="row mb-2"> --}}
-                            <!-- Search bar -->
-                            {{-- <div class="col-md-6 d-flex align-items-center">
-                                    <form class="input-group input-group-sm">
-                                        <input class="form-control" type="search" placeholder="Search"
-                                            aria-label="Search">
+                            <div class="row mb-2">
+                                <!-- Search bar -->
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <form class="input-group input-group-sm" method="GET"
+                                        action="{{ route('admin.users') }}">
+                                        <input class="form-control" type="search" name="search" placeholder="Search"
+                                            aria-label="Search" value="{{ request()->input('search') }}" />
                                         <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
                                     </form>
-                                </div> --}}
-                            <!-- Export buttons aligned to the right -->
-                            {{-- <div class="col-md-6 d-flex justify-content-end">
-                                    <button class="btn btn-outline-danger btn-sm">PDF</button>
-                                    <button class="btn btn-outline-success btn-sm">CSV</button>
-                                    <button class="btn btn-outline-primary btn-sm">Excel</button>
-                                    <button class="btn btn-outline-info btn-sm">Copy</button>
-                                    <button class="btn btn-outline-secondary btn-sm">Print</button>
-                                </div> --}}
-                            {{-- </div> --}}
+                                </div>
+                                <!-- Export buttons aligned to the right -->
+                                <div class="col-md-6 d-flex justify-content-end">
+                                    <a href="{{ route('admin.users.export.csv') }}"
+                                        class="btn btn-outline-danger btn-sm">CSV</a>
+                                    <a href="{{ route('admin.users.export.excel') }}"
+                                        class="btn btn-outline-primary btn-sm">Excel</a>
+                                    <a href="{{ route('admin.users.export.pdf') }}"
+                                        class="btn btn-outline-success btn-sm">PDF</a>
+                                </div>
+
+                            </div>
+
 
 
 

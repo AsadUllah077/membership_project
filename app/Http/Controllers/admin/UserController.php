@@ -6,11 +6,20 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 class UserController extends Controller
 {
-    public function index(){
-        $users = User::paginate(10);
+    public function index(Request $request){
+        $query = User::query();
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $users = $query->paginate(10);
         return view('admin/users',compact('users'));
     }
 
@@ -86,4 +95,83 @@ class UserController extends Controller
         User::destroy($id);
         return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }
+
+    public function exportCsv()
+    {
+        $filename = "users_list.csv";
+        $users = User::all();
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $columns = ['Name', 'Email', 'Status'];
+
+        $callback = function () use ($users, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->name,
+                    $user->email,
+                    $user->status,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Name')
+            ->setCellValue('B1', 'Email')
+            ->setCellValue('C1', 'Status');
+
+        $users = User::all();
+        $row = 2;
+
+        foreach ($users as $user) {
+            $sheet->setCellValue("A$row", $user->name)
+                ->setCellValue("B$row", $user->email)
+                ->setCellValue("C$row", $user->status);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = "users_list.xlsx";
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+
+        $writer->save("php://output");
+    }
+
+    public function exportPdf()
+    {
+        $users = User::all();
+
+        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        $html = view('admin.pdf', compact('users'))->render();
+        $pdf->loadHtml($html);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->render();
+
+        return $pdf->stream("users_list.pdf", ["Attachment" => true]);
+    }
+
 }

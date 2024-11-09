@@ -6,12 +6,21 @@ use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 class CertificateController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Certificate::query();
 
-        $certificates = Certificate::paginate(10);
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        $certificates = $query->paginate(10);
+        // $certificates = Certificate::paginate(10);
         return view('admin/certificates/index', compact('certificates'));
     }
 
@@ -75,4 +84,91 @@ class CertificateController extends Controller
         Certificate::destroy($id);
         return redirect()->route('admin.certification')->with('success', 'Certificate deleted successfully.');
     }
+
+    public function exportCsv()
+{
+    $filename = "certifications_list.csv";
+    $certifications = Certificate::all();
+
+    $headers = [
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$filename",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    ];
+
+    $columns = ['IFMP-ID', 'CNIC', 'Category', 'Certification', 'Valid Till'];
+
+    $callback = function () use ($certifications, $columns) {
+        $file = fopen('php://output', 'w');
+        fputcsv($file, $columns);
+
+        foreach ($certifications as $certification) {
+            fputcsv($file, [
+                $certification->ifmp_id,
+                $certification->cnic,
+                $certification->category,
+                $certification->certification,
+                $certification->valid_till,
+            ]);
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+public function exportExcel()
+{
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    $sheet->setCellValue('A1', 'IFMP-ID')
+        ->setCellValue('B1', 'CNIC')
+        ->setCellValue('C1', 'Category')
+        ->setCellValue('D1', 'Certification')
+        ->setCellValue('E1', 'Valid Till');
+
+    $certifications = Certificate::all();
+    $row = 2;
+
+    foreach ($certifications as $certification) {
+        $sheet->setCellValue("A$row", $certification->ifmp_id)
+            ->setCellValue("B$row", $certification->cnic)
+            ->setCellValue("C$row", $certification->category)
+            ->setCellValue("D$row", $certification->certification)
+            ->setCellValue("E$row", $certification->valid_till);
+        $row++;
+    }
+
+    $writer = new Xlsx($spreadsheet);
+    $filename = "certifications_list.xlsx";
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header("Content-Disposition: attachment; filename=\"$filename\"");
+
+    $writer->save("php://output");
+}
+
+
+public function exportPdf()
+{
+    $certifications = Certificate::all();
+
+    $pdf = new Dompdf();
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $pdf->setOptions($options);
+
+    $html = view('admin.certificates.pdf', compact('certifications'))->render();
+    $pdf->loadHtml($html);
+    $pdf->setPaper('A4', 'landscape');
+    $pdf->render();
+
+    return $pdf->stream("certifications_list.pdf", ["Attachment" => true]);
+}
+
 }
