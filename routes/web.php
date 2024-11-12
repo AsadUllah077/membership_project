@@ -112,3 +112,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/membership/export/excel', [MembershipController::class, 'exportExcel'])->name('admin.membership.export.excel');
     Route::get('admin/membership/export/pdf', [MembershipController::class, 'exportPdf'])->name('admin.membership.export.pdf');
 });
+
+Route::get('admin/frontpage', function(){
+   return view('admin.frontpage');
+});
