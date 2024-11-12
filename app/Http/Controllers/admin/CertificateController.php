@@ -10,6 +10,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+
 class CertificateController extends Controller
 {
     public function index(Request $request)
@@ -24,6 +25,31 @@ class CertificateController extends Controller
         return view('admin/certificates/index', compact('certificates'));
     }
 
+
+    public function search1(Request $request)
+    {
+        // Validate CNIC format on the server side
+        $request->validate([
+            'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
+        ]);
+
+        // Search for certificate by CNIC
+        $certificate = Certificate::where('cnic', $request->cnic)->first();
+
+        // Check if certificate exists
+        if ($certificate) {
+            return response()->json([
+                'ifmp_id' => $certificate->ifmp_id,
+                'name' => $certificate->name,
+                'dues' => $certificate->dues,
+                'status' => $certificate->status,
+                'payment' => 'Pay Online',
+                'certification' => $certificate->certification
+            ]);
+        } else {
+            return response()->json(['error' => 'Certificate not found'], 404);
+        }
+    }
     public function create()
     {
         return view('admin/certificates/certificate_create');
@@ -35,7 +61,7 @@ class CertificateController extends Controller
 
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
+            'cnic' => ['required', 'string', 'max:15'],
             'category' => ['required', 'string'],
             'certification' => ['required', 'string'],
             'valid_till' => ['required'],
@@ -63,7 +89,7 @@ class CertificateController extends Controller
     {
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
+            'cnic' => ['required', 'string', 'max:15'],
             'category' => ['required', 'string'],
             'certification' => ['required', 'string'],
             'valid_till' => ['required'],
@@ -86,89 +112,88 @@ class CertificateController extends Controller
     }
 
     public function exportCsv()
-{
-    $filename = "certifications_list.csv";
-    $certifications = Certificate::all();
+    {
+        $filename = "certifications_list.csv";
+        $certifications = Certificate::all();
 
-    $headers = [
-        "Content-type" => "text/csv",
-        "Content-Disposition" => "attachment; filename=$filename",
-        "Pragma" => "no-cache",
-        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-        "Expires" => "0"
-    ];
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
 
-    $columns = ['IFMP-ID', 'CNIC', 'Category', 'Certification', 'Valid Till'];
+        $columns = ['IFMP-ID', 'CNIC', 'Category', 'Certification', 'Valid Till'];
 
-    $callback = function () use ($certifications, $columns) {
-        $file = fopen('php://output', 'w');
-        fputcsv($file, $columns);
+        $callback = function () use ($certifications, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
 
-        foreach ($certifications as $certification) {
-            fputcsv($file, [
-                $certification->ifmp_id,
-                $certification->cnic,
-                $certification->category,
-                $certification->certification,
-                $certification->valid_till,
-            ]);
-        }
+            foreach ($certifications as $certification) {
+                fputcsv($file, [
+                    $certification->ifmp_id,
+                    $certification->cnic,
+                    $certification->category,
+                    $certification->certification,
+                    $certification->valid_till,
+                ]);
+            }
 
-        fclose($file);
-    };
+            fclose($file);
+        };
 
-    return response()->stream($callback, 200, $headers);
-}
-
-
-public function exportExcel()
-{
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-
-    $sheet->setCellValue('A1', 'IFMP-ID')
-        ->setCellValue('B1', 'CNIC')
-        ->setCellValue('C1', 'Category')
-        ->setCellValue('D1', 'Certification')
-        ->setCellValue('E1', 'Valid Till');
-
-    $certifications = Certificate::all();
-    $row = 2;
-
-    foreach ($certifications as $certification) {
-        $sheet->setCellValue("A$row", $certification->ifmp_id)
-            ->setCellValue("B$row", $certification->cnic)
-            ->setCellValue("C$row", $certification->category)
-            ->setCellValue("D$row", $certification->certification)
-            ->setCellValue("E$row", $certification->valid_till);
-        $row++;
+        return response()->stream($callback, 200, $headers);
     }
 
-    $writer = new Xlsx($spreadsheet);
-    $filename = "certifications_list.xlsx";
 
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header("Content-Disposition: attachment; filename=\"$filename\"");
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-    $writer->save("php://output");
-}
+        $sheet->setCellValue('A1', 'IFMP-ID')
+            ->setCellValue('B1', 'CNIC')
+            ->setCellValue('C1', 'Category')
+            ->setCellValue('D1', 'Certification')
+            ->setCellValue('E1', 'Valid Till');
+
+        $certifications = Certificate::all();
+        $row = 2;
+
+        foreach ($certifications as $certification) {
+            $sheet->setCellValue("A$row", $certification->ifmp_id)
+                ->setCellValue("B$row", $certification->cnic)
+                ->setCellValue("C$row", $certification->category)
+                ->setCellValue("D$row", $certification->certification)
+                ->setCellValue("E$row", $certification->valid_till);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = "certifications_list.xlsx";
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+
+        $writer->save("php://output");
+    }
 
 
-public function exportPdf()
-{
-    $certifications = Certificate::all();
+    public function exportPdf()
+    {
+        $certifications = Certificate::all();
 
-    $pdf = new Dompdf();
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $pdf->setOptions($options);
+        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
 
-    $html = view('admin.certificates.pdf', compact('certifications'))->render();
-    $pdf->loadHtml($html);
-    $pdf->setPaper('A4', 'landscape');
-    $pdf->render();
+        $html = view('admin.certificates.pdf', compact('certifications'))->render();
+        $pdf->loadHtml($html);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->render();
 
-    return $pdf->stream("certifications_list.pdf", ["Attachment" => true]);
-}
-
+        return $pdf->stream("certifications_list.pdf", ["Attachment" => true]);
+    }
 }

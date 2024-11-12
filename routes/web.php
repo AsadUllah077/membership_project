@@ -116,3 +116,4 @@ Route::middleware(['auth'])->group(function () {
 Route::get('admin/frontpage', function(){
    return view('admin.frontpage');
 });
+Route::post('/certificate/search', [CertificateController::class, 'search1'])->name('certificate.search');

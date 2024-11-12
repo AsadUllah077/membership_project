@@ -40,7 +40,7 @@ class UserController extends Controller
             // Authentication was successful; redirect to the admin dashboard
             return redirect()->route('admin.dashboard');
         }
-        dd($request->all());
+        // dd($request->all());
 
         // Authentication failed; redirect back with an error message
         return redirect()->route('login');
