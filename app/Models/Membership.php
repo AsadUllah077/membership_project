@@ -10,7 +10,6 @@ class Membership extends Model
         'ifmp_id',
         'name',
         'cnic',
-        'certificate_id',
         'status',
         'dues',
         'balance',
@@ -18,8 +17,5 @@ class Membership extends Model
         'valid_till',
     ];
 
-    public function certificate()
-    {
-        return $this->belongsTo(Certificate::class, 'certificate_id');
-    }
+
 }

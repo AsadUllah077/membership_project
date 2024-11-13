@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Models\Membership;
+
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class CertificateController extends Controller
 {
@@ -29,7 +30,8 @@ class CertificateController extends Controller
 
     public function create()
     {
-        return view('admin/certificates/certificate_create');
+        $members = Membership::all();
+        return view('admin/certificates/certificate_create', compact('members'));
     }
 
     public function store(Request $request)
@@ -37,8 +39,7 @@ class CertificateController extends Controller
         // dd($request);
 
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15'],
+            'member_id' => ['required', 'integer'],
             'category' => ['required', 'string'],
             'certification' => ['required', 'string'],
             'valid_till' => ['required'],
@@ -46,8 +47,7 @@ class CertificateController extends Controller
         ]);
 
         Certificate::create([
-            'ifmp_id' => $request->ifmp_id,
-            'cnic' => $request->cnic,
+            'member_id' => $request->member_id,
             'category' =>  $request->category,
             'certification' => $request->certification,
             'valid_till' => $request->valid_till
@@ -59,21 +59,20 @@ class CertificateController extends Controller
     public function edit($id)
     {
         $certificate = Certificate::find($id);
-        return view('admin/certificates/certificate_edit', compact('certificate'));
+        $members = Membership::all();
+        return view('admin/certificates/certificate_edit', compact('certificate', 'members'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15'],
+            'member_id' => ['required', 'integer'],
             'category' => ['required', 'string'],
             'certification' => ['required', 'string'],
             'valid_till' => ['required'],
         ]);
         $certificate = Certificate::find($id);
-        $certificate->ifmp_id = $request->ifmp_id;
-        $certificate->cnic = $request->cnic;
+        $certificate->member_id = $request->member_id;
         $certificate->category = $request->category;
         $certificate->certification = $request->certification;
         $certificate->valid_till = $request->valid_till;

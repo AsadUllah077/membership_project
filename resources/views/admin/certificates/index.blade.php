@@ -123,8 +123,8 @@
                                           @foreach ($certificates as $certificate)
                                               <tr>
                                                 <td>{{ $certificate->created_at->format('d-m-Y') }}</td>
-                                                <td>{{ $certificate->ifmp_id }}</td>
-                                                <td>{{ $certificate->cnic }}</td>
+                                                <td>{{ $certificate->member->ifmp_id }}</td>
+                                                <td>{{ $certificate->member->cnic }}</td>
                                                 <td>{{ $certificate->category }}</td>
                                                 <td>{{ $certificate->certification }}</td>
                                                 <td>{{ $certificate->valid_till }}</td>

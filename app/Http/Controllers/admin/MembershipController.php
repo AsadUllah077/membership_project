@@ -46,7 +46,7 @@ class MembershipController extends Controller
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
             'balance' => ['required', 'integer'],
-            'certificate_id' => ['required', 'integer'],
+
             'dues' => ['required', 'integer'],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15'],
@@ -58,7 +58,7 @@ class MembershipController extends Controller
         Membership::create([
             'ifmp_id' => $request->ifmp_id,
             'balance' => $request->balance,
-            'certificate_id' =>  $request->certificate_id,
+
             'dues' => $request->dues,
             'name' => $request->name,
             'cnic' => $request->cnic,
@@ -82,7 +82,7 @@ class MembershipController extends Controller
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
             'balance' => ['required', 'integer'],
-            'certificate_id' => ['required', 'integer'],
+
             'dues' => ['required', 'integer'],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15'],
@@ -94,7 +94,7 @@ class MembershipController extends Controller
         $membership = Membership::find($id);
         $membership->ifmp_id = $request->ifmp_id;
         $membership->balance = $request->balance;
-        $membership->certificate_id = $request->certificate_id;
+
         $membership->cnic = $request->cnic;
         $membership->dues = $request->dues;
         $membership->name = $request->name;

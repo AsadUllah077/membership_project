@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Membership;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Certificate extends Model
 {
@@ -11,13 +12,11 @@ class Certificate extends Model
         'valid_till',
         'certification',
         'category',
-        'cnic',
-        'ifmp_id'
+        'member_id'
 
     ];
 
-    public function membership()
-    {
-        return $this->hasMany(Membership::class, 'certificate_id');
+    public function member() :BelongsTo{
+        return $this->belongsTo(Membership::class);
     }
 }

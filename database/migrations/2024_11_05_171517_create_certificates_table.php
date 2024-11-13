@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->string('ifmp_id');
-            $table->string('cnic');
+            $table->foreignId('member_id')->references('id')->on('memberships');
             $table->string('category');
             $table->string('certification');
             $table->date('valid_till');

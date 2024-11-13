@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('ifmp_id');
             $table->string('name');
             $table->string('cnic');
-            $table->foreignId('certificate_id')->references('id')->on('certificates');
+
             $table->string('status');
             $table->integer('dues');
             $table->integer('balance');
