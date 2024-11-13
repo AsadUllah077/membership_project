@@ -33,6 +33,8 @@ class MembershipController extends Controller
         return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search'));
     }
 
+
+
     public function create()
     {
         $certificates = Certificate::all();
@@ -47,7 +49,7 @@ class MembershipController extends Controller
             'certificate_id' => ['required', 'integer'],
             'dues' => ['required', 'integer'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
+            'cnic' => ['required', 'string', 'max:15'],
             'm_date' => ['required', 'date'],
             'valid_till' => ['required', 'date'],
             'status' => ['required', 'string'],
@@ -83,7 +85,7 @@ class MembershipController extends Controller
             'certificate_id' => ['required', 'integer'],
             'dues' => ['required', 'integer'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
+            'cnic' => ['required', 'string', 'max:15'],
             'm_date' => ['required', 'date'],
             'valid_till' => ['required', 'date'],
             'status' => ['required', 'string'],

@@ -21,6 +21,10 @@
                class="nav-item nav-link {{ Request::is('admin/dashboard') ? 'active' : '' }}">
                 <i class="fa fa-tachometer-alt me-2"></i>Dashboard
             </a>
+            {{-- <a href="{{ route('admin.frontpage') }}"
+               class="nav-item nav-link {{ Request::is('admin/frontpage') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2"></i>search page
+            </a> --}}
             <a href="{{ route('admin.membership') }}"
                class="nav-item nav-link {{ Request::is('admin/membership/index') ? 'active' : '' }}">
                 <i class="fas fa-handshake"></i>Membership

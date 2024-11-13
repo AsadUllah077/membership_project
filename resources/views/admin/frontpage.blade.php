@@ -16,9 +16,19 @@
             </div>
         </div>
         <!-- Title Start -->
-        <div class="col-md-12 bg-primary text-light p-3 text-center">
+        <div class="col-md-12 bg-primary text-light p-3 text-center d-flex justify-content-between align-items-center">
             <strong>IFMP MEMBERS VERIFICATION</strong>
+
+            {{-- <nav>
+                <a
+                    href="{{ route('login') }}"
+                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                >
+                    Log in
+                </a>
+            </nav> --}}
         </div>
+
 
         <!-- Search Form -->
         <div class="col-md-12 p-5">
@@ -107,7 +117,7 @@
                     tableBody.innerHTML = `
                         <tr>
                             <td>${data.ifmp_id}</td>
-                            <td>${data.certification}</td>
+                            <td>${data.name}</td>
                             <td>${data.dues}</td>
                             <td>${data.status}</td>
                             <td class="text-center"><button class="btn btn-outline-primary btn-sm">Pay Online</button></td>

@@ -13,12 +13,20 @@ use App\Http\Controllers\admin\CertificateController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', function () {
+        return view('admin.frontpage');
+    })->name('admin.frontpage');
+
+    Route::get('/admin/login', function () {
         return view('login');
     })->name('login');
 
+
     Route::post('/admin/login', [UserController::class, 'login'])->name('admin.login');
 });
-
+Route::post('/certificate/search', [RoutsController::class, 'search1'])->name('certificate.search');
+    // Route::get('admin/frontpage', function () {
+    //     return view('admin.frontpage');
+    // })->name('');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', function () {
@@ -67,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/certificates/update/{id}', [CertificateController::class, 'update'])->name('admin.update_certificate');
 
 
+
+
     //export routs
     Route::get('admin/certificates/export/csv', [CertificateController::class, 'exportCsv'])->name('admin.certificates.export.csv');
     Route::get('admin/certificates/export/excel', [CertificateController::class, 'exportExcel'])->name('admin.certificates.export.excel');
@@ -108,12 +118,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/membership/store', [MembershipController::class, 'store'])->name('admin.store_membership');
     Route::post('/admin/membership/update/{id}', [MembershipController::class, 'update'])->name('admin.update_membership');
 
+
+
+
     Route::get('admin/membership/export/csv', [MembershipController::class, 'exportCsv'])->name('admin.membership.export.csv');
     Route::get('admin/membership/export/excel', [MembershipController::class, 'exportExcel'])->name('admin.membership.export.excel');
     Route::get('admin/membership/export/pdf', [MembershipController::class, 'exportPdf'])->name('admin.membership.export.pdf');
 });
 
-Route::get('admin/frontpage', function(){
-   return view('admin.frontpage');
-});
-Route::post('/certificate/search', [CertificateController::class, 'search1'])->name('certificate.search');
+

@@ -26,30 +26,7 @@ class CertificateController extends Controller
     }
 
 
-    public function search1(Request $request)
-    {
-        // Validate CNIC format on the server side
-        $request->validate([
-            'cnic' => 'required|regex:/^\d{5}-\d{7}-\d{1}$/',
-        ]);
 
-        // Search for certificate by CNIC
-        $certificate = Certificate::where('cnic', $request->cnic)->first();
-
-        // Check if certificate exists
-        if ($certificate) {
-            return response()->json([
-                'ifmp_id' => $certificate->ifmp_id,
-                'name' => $certificate->name,
-                'dues' => $certificate->dues,
-                'status' => $certificate->status,
-                'payment' => 'Pay Online',
-                'certification' => $certificate->certification
-            ]);
-        } else {
-            return response()->json(['error' => 'Certificate not found'], 404);
-        }
-    }
     public function create()
     {
         return view('admin/certificates/certificate_create');
