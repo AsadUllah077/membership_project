@@ -18,4 +18,8 @@ class Membership extends Model
     ];
 
 
+    public function certificates(){
+        return $this->hasMany(Certificate::class,'member_id');
+    }
+
 }

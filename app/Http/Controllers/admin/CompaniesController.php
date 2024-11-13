@@ -35,18 +35,17 @@ class CompaniesController extends Controller
     {
         $validator = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            't_active' => ['required', 'integer'],
-            't_inactive' => ['required', 'integer'],
-            'total_dues' => ['required', 'integer'],
-            'total_paid' => ['required', 'integer'],
+            'email' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'sba' => ['required', 'string'],
+
 
         ]);
         Company::create([
             'name' => $request->name,
-            't_active' => $request->t_active,
-            't_inactive' =>  $request->t_inactive,
-            'total_dues' => $request->total_dues,
-            'total_paid' => $request->total_paid
+            'email' => $request->email,
+            'phone' =>  $request->phone,
+            'sba' => $request->sba
         ]);
 
         return redirect()->route('admin.companies')->with('success', 'Company created successfully.');
@@ -62,18 +61,16 @@ class CompaniesController extends Controller
     {
         $validator = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            't_active' => ['required', 'integer'],
-            't_inactive' => ['required', 'integer'],
-            'total_dues' => ['required', 'integer'],
-            'total_paid' => ['required', 'integer'],
+            'email' => ['required', 'string'],
+            'phone' => ['required', 'string'],
+            'sba' => ['required', 'string'],
         ]);
 
         $company = Company::find($id);
         $company->name = $request->name;
-        $company->total_dues = $request->total_dues;
-        $company->total_paid = $request->total_paid;
-        $company->t_active = $request->t_active;
-        $company->t_inactive = $request->t_inactive;
+        $company->email = $request->email;
+        $company->phone = $request->phone;
+        $company->sba = $request->sba;
         $company->save();
 
         return redirect()->route('admin.companies')->with('success', 'Company updated successfully.');

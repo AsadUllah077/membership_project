@@ -8,10 +8,8 @@ class Company extends Model
 {
     protected $fillable = [
         'name',
-        'total_paid',
-        'total_dues',
-        't_inactive',
-        't_active'
-
+        'email',
+        'phone',
+        'sba'
     ];
 }

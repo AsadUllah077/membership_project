@@ -21,10 +21,12 @@ class MembershipController extends Controller
         $search = $request->input('search'); // Get the search input
 
         // Filter memberships based on search query
-        $membership = Membership::when($search, function ($query, $search) {
+        $membership = Membership::with('certificates')->when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
             // Add more conditions as needed
         })->paginate(10);
+        // dd($membership);
+
 
         $certificates = Certificate::all();
         $active_users = User::where('status', 'active')->count();
