@@ -24,56 +24,65 @@
             <h3>Add New Fees</h3>
             <form action="{{ route('admin.store_fees') }}" method="POST">
                 @csrf
+                <div class="row">
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="member_select" class="form-label">Select Member</label>
+                        <select name="member_id" id="member_select" class="form-control" required>
+                            <option value="" disabled selected>Select a member</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('member_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="mb-3">
-                    <label for="ifmp_id" class="form-label">Ifmp Id</label>
-                    <input type="text" name="ifmp_id" id="ifmp_id" class="form-control"
-                        value="{{ old('ifmp_id') }}" required>
-                    @error('ifmp_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="membership" class="form-label">Membership Status</label>
+                        <select name="fees" id="membership" class="form-control" required>
+                            <option value="" disabled selected>Select membership status</option>
+                            <option value="membership-renewal-2024">Membership Renewal 2024</option>
+                            <option value="membership-renewal-2025">Membership Renewal 2025</option>
+                            <option value="membership-renewal-2026">Membership Renewal 2026</option>
+                            <option value="membership-renewal-2027">Membership Renewal 2027</option>
+                            <option value="membership-renewal-2028">Membership Renewal 2028</option>
+                            <option value="membership-renewal-2029">Membership Renewal 2029</option>
+                            <option value="membership-renewal-2030">Membership Renewal 2030</option>
+                        </select>
+                        @error('fees')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="fees_year" class="form-label">Fees Year</label>
+                        <input type="date" name="fees_year" id="fees_year" class="form-control"
+                            value="{{ old('fees_year') }}" required>
+                        @error('fees_year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" id="amount" class="form-control"
+                            value="{{ old('amount') }}" required>
+                        @error('amount')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="fees_date" class="form-label">Fees Date</label>
+                        <input type="date" name="fees_date" id="fees_date" class="form-control" required>
+                        @error('fees_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                 </div>
-
-                <div class="mb-3">
-                    <label for="cnic" class="form-label">CNIC</label>
-                    <input type="text" name="cnic" id="cnic" class="form-control" value="{{ old('cnic') }}"
-                        required>
-                    @error('cnic')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="fees_year" class="form-label">Fees Year</label>
-                    <input type="date" name="fees_year" id="fees_year" class="form-control"
-                        value="{{ old('fees_year') }}" required>
-                    @error('fees_year')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="amount" class="form-label">Amount</label>
-                    <input type="number" name="amount" id="amount" class="form-control" value="{{ old('amount') }}"
-                        required>
-                    @error('amount')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-control form-select" required>
-                        <option value="">Select Status</option>
-                        <option value="paid" {{ old('status') == 'paid' ? 'selected' : '' }}>paid</option>
-
-                        <option value="unpaid" {{ old('status') == 'unpaid' ? 'selected' : '' }}>unpaid</option>
-                    </select>
-                    @error('status')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
 
                 <button type="submit" class="btn btn-primary">Add Fees</button>
             </form>

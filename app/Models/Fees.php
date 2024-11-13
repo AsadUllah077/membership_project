@@ -3,14 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Fees extends Model
 {
     protected $fillable = [
         'status',
+        'fees_date',
+        'fees',
         'amount',
         'fees_year',
-        'cnic',
-        'ifmp_id'
+        'member_id'
     ];
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Membership::class, "member_id");
+    }
 }

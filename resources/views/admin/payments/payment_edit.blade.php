@@ -25,53 +25,59 @@
             <form action="{{ route('admin.update_payment',$payment->id) }}" method="POST">
                 @csrf
 
-                <div class="mb-3">
-                    <label for="ifmp_id" class="form-label">Ifmp Id</label>
-                    <input type="text" name="ifmp_id" id="ifmp_id" class="form-control" value="{{ $payment->ifmp_id}}" required>
-                    @error('ifmp_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="member_select" class="form-label">Select Member</label>
+                        <select name="member_id" id="member_select" class="form-control" required>
+                            <option value="" disabled>Select a member</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}" {{ $payment->member_id == $member->id ? 'selected' : '' }}>
+                                    {{ $member->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('member_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="reciept_number" class="form-label">Receipt Number</label>
+                        <input type="number" name="reciept_number" id="reciept_number" class="form-control"
+                               value="{{ old('reciept_number', $payment->reciept_number) }}" required>
+                        @error('reciept_number')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="reciept_date" class="form-label">Receipt Date</label>
+                        <input type="date" name="reciept_date" id="reciept_date" class="form-control"
+                               value="{{ old('reciept_date', $payment->reciept_date) }}" required>
+                        @error('reciept_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="bank_name" class="form-label">Bank Name</label>
+                        <input type="text" name="bank_name" id="bank_name" class="form-control"
+                               value="{{ old('bank_name', $payment->bank_name) }}" required>
+                        @error('bank_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" id="amount" class="form-control"
+                               value="{{ old('amount', $payment->amount) }}" required>
+                        @error('amount')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="reciept_number" class="form-label">Reciept Number</label>
-                    <input type="number" name="reciept_number" id="reciept_number" class="form-control" value="{{ $payment->reciept_number }}" required>
-                    @error('reciept_number')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="reciept_date" class="form-label">Reciept Date</label>
-                    <input type="date" name="reciept_date" id="reciept_date" class="form-control" value="{{ $payment->reciept_date }}" required>
-                    @error('reciept_date')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="cnic" class="form-label">CNIC</label>
-                    <input type="text" name="cnic" id="cnic" class="form-control" value="{{ $payment->cnic }}" required>
-                    @error('cnic')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="bank_name" class="form-label">Banke Name</label>
-                    <input type="text" name="bank_name" id="bank_name" class="form-control" value="{{ $payment->bank_name }}" required>
-                    @error('bank_name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="amount" class="form-label">Amount</label>
-                    <input type="number" name="amount" id="amount" class="form-control" value="{{ $payment->amount }}" required>
-                    @error('amount')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>

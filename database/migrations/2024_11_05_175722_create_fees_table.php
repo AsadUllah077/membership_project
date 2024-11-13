@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->string('ifmp_id');
-            $table->string('cnic');
             $table->string('fees_year');
+            $table->date('fees_date');
             $table->integer('amount');
-            $table->string('status');
+            $table->string('status')->default('unpaid');
+            $table->string('fees');
+            $table->foreignId('member_id')->references('id')->on('memberships');
             $table->timestamps();
         });
     }

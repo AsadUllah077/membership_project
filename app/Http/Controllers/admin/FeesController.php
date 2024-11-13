@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\admin;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Models\Fees;
+use App\Models\Membership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class FeesController extends Controller
 {
@@ -25,34 +28,40 @@ class FeesController extends Controller
 
         $fees = $query->paginate(10);
         $all_fees = Fees::count();
+        // $all_fees = Fees::with('member')->get();
+        // dd($all_fees);
         $paid_fees = Fees::where('status', 'paid')->count();
         $unpaid_fees = Fees::where('status', 'unpaid')->count();
 
         return view('admin.fees.index', compact('fees', 'all_fees', 'paid_fees', 'unpaid_fees'));
     }
 
-    public function create()
+    public function create() : View
     {
-        return view('admin/fees/fees_create');
+        $members = Membership::all();
+        return view('admin/fees/fees_create', compact('members'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
-        $validator = $request->validate([
-            'status' => ['required', 'string', 'max:255'],
+        // dd($request->all());
+
+        $validator = $request->validate(rule :[
+
             'amount' => ['required', 'integer'],
             'fees_year' => ['required', 'date'],
-            'cnic' => ['required', 'string', 'max:14'],
-            'ifmp_id' => ['required', 'string'],
+            'fees_date' => ['required', 'date'],
+            'member_id' => ['required', 'integer'],
+            'fees' => ['required', 'string'],
 
         ]);
         $year = Carbon::parse($request->input('fees_year'))->year;
         Fees::create([
-            'status' => $request->status,
+            'fees_date' => $request->fees_date,
             'amount' => $request->amount,
             'fees_year' =>  $year,
-            'cnic' => $request->cnic,
-            'ifmp_id' => $request->ifmp_id
+            'member_id' => $request->member_id,
+            'fees' => $request->fees
         ]);
 
         return redirect()->route('admin.fees')->with('success', 'Fees created successfully.');
@@ -61,26 +70,30 @@ class FeesController extends Controller
     public function edit($id)
     {
         $fees = Fees::find($id);
-        return view('admin/fees/fees_edit', compact('fees'));
+        $members = Membership::all();
+        return view('admin/fees/fees_edit', compact('fees', 'members'));
+
+
     }
 
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-            'status' => ['required', 'string', 'max:255'],
+
             'amount' => ['required', 'integer'],
             'fees_year' => ['required', 'date'],
-            'cnic' => ['required', 'string', 'max:14'],
-            'ifmp_id' => ['required', 'string'],
+            'fees_date' => ['required', 'date'],
+            'member_id' => ['required', 'integer'],
+            'fees' => ['required', 'string'],
         ]);
 
         $fees = Fees::find($id);
 
-        $fees->status = $request->status;
+        $fees->fees_date = $request->fees_date;
         $fees->amount = $request->amount;
         $fees->fees_year = Carbon::parse($request->fees_year)->year;
-        $fees->cnic = $request->cnic;
-        $fees->ifmp_id = $request->ifmp_id;
+        $fees->member_id = $request->member_id;
+        $fees->fees = $request->fees;
         $fees->save();
 
         return redirect()->route('admin.fees')->with('success', 'Fees updated successfully.');

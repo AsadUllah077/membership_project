@@ -261,8 +261,8 @@
                                                 @foreach ($fees as $fee)
                                                     <tr>
                                                         <td>{{ $fee->created_at->format('d-m-Y') }}</td>
-                                                        <td>{{ $fee->ifmp_id }}</td>
-                                                        <td>{{ $fee->cnic }}</td>
+                                                        <td>{{ $fee->member->ifmp_id }}</td>
+                                                        <td>{{ $fee->member->cnic }}</td>
                                                         <td>{{ $fee->fees_year }}</td>
                                                         <td>{{ $fee->amount }}</td>
                                                         <td>{{ $fee->status }}</td>

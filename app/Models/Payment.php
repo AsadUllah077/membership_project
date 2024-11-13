@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
@@ -11,7 +12,10 @@ class Payment extends Model
         'reciept_number',
         'reciept_date',
         'bank_name',
-        'cnic',
-        'ifmp_id'
+        'member_id'
     ];
+
+    public function member() :BelongsTo{
+        return $this->belongsTo(Membership::class,'member_id');
+    }
 }

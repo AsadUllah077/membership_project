@@ -84,8 +84,8 @@
                                         <tbody>
                                                 @foreach ($payments as $payment )
                                                 <tr>
-                                                    <td>{{ $payment->ifmp_id }}</td>
-                                                    <td>{{ $payment->cnic }}</td>
+                                                    <td>{{ $payment->member->ifmp_id }}</td>
+                                                    <td>{{ $payment->member->cnic }}</td>
                                                     <td>{{ $payment->bank_name }}</td>
                                                     <td>{{ $payment->reciept_date }}</td>
                                                     <td>{{ $payment->reciept_number }}</td>

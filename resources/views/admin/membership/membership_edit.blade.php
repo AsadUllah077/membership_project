@@ -22,92 +22,59 @@
         {{-- Add user form --}}
         <div class="container mt-4">
             <h3>Update Membership</h3>
-            <form action="{{ route('admin.update_membership',$membership->id) }}" method="POST">
+            <form action="{{ route('admin.update_membership', $membership->id) }}" method="POST">
                 @csrf
+                <div class="row">
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12 col-xl-4 col-md-6 col-sm-12">
+                        <label for="member_select" class="form-label">Select Member</label>
+                        <select name="member_id" id="member_select" class="form-control" required>
+                            <option value="" disabled selected>Select a member</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('member_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ $membership->name }}" required>
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="reciept_number" class="form-label">Reciept Number</label>
+                        <input type="number" name="reciept_number" id="reciept_number" class="form-control"
+                            value="{{ old('reciept_number') }}" required>
+                        @error('reciept_number')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="mb-3">
-                    <label for="ifmp_id" class="form-label">Ifmp Id</label>
-                    <input type="number" name="ifmp_id" id="ifmp_id" class="form-control" value="{{ $membership->ifmp_id }}" required>
-                    @error('ifmp_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="cnic" class="form-label">CNIC</label>
-                    <input type="number" name="cnic" id="cnic" class="form-control" value="{{ $membership->cnic }}" required>
-                    @error('cnic')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="certificate_id" class="form-label">Certificates Dues</label>
-                    <select class="form-control form-select" name="certificate_id">
-                        <option value="" disabled>Select certificate</option>
-                        @foreach ($certificates as $certificate)
-                            <option value="{{ $certificate->id }}"
-                                {{ $membership->certificate_id == $certificate->id ? 'selected' : '' }}>
-                                {{ $certificate->certification }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('certificate_id')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="reciept_date" class="form-label">Reciept Date</label>
+                        <input type="date" name="reciept_date" id="reciept_date" class="form-control"
+                            value="{{ old('reciept_date') }}" required>
+                        @error('reciept_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
 
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-control form-select" name="status">
-                        <option value="" disabled="" selected="">Select Status</option>
-                        <option value="active" {{$membership->status == 'active' ? 'selected' : ''}}>Active</option>
-                        <option value="inactive" {{$membership->status == 'inactive' ? 'selected' : ''}}>Inactive</option>
-                    </select>
-                    @error('status')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
 
-                <div class="mb-3">
-                    <label for="dues" class="form-label">Dues</label>
-                    <input type="number" name="dues" id="dues" class="form-control" value="{{ $membership->dues }}" required>
-                    @error('dues')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="bank_name" class="form-label">Banke Name</label>
+                        <input type="text" name="bank_name" id="bank_name" class="form-control"
+                            value="{{ old('bank_name') }}" required>
+                        @error('bank_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="mb-3">
-                    <label for="balance" class="form-label">Balance</label>
-                    <input type="number" name="balance" id="balance" class="form-control" value="{{ $membership->balance }}" required>
-                    @error('balance')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="m_date" class="form-label">M Date</label>
-                    <input type="date" name="m_date" id="m_date" class="form-control" value="{{ $membership->m_date }}" required>
-                    @error('m_date')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="valid_till" class="form-label">Valid Till</label>
-                    <input type="date" name="valid_till" id="valid_till" class="form-control" value="{{ $membership->valid_till }}" required>
-                    @error('valid_till')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" id="amount" class="form-control"
+                            value="{{ old('amount') }}" required>
+                        @error('amount')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Membership</button>

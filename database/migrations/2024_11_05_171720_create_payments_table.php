@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('ifmp_id');
-            $table->string('cnic');
+            $table->foreignId('member_id')->references('id')->on('memberships');
             $table->string('bank_name');
             $table->date('reciept_date');
             $table->string('reciept_number');

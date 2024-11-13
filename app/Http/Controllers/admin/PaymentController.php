@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Payment;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Models\Payment;
+use App\Models\Membership;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class PaymentController extends Controller
 {
     public function index(Request $request)
@@ -29,24 +31,23 @@ class PaymentController extends Controller
 
 
     public function create(){
-        return view('admin/payments/payment_create');
+        $members = Membership::all();
+        return view('admin/payments/payment_create',compact('members'));
     }
 
     public function store(Request $request){
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
+            'member_id' => ['required', 'integer'],
             'amount' => ['required', 'integer'],
             'bank_name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
             'reciept_date' => ['required', 'date'],
             'reciept_number' => ['required', 'string'],
 
         ]);
         Payment::create([
-            'ifmp_id' => $request->ifmp_id,
+            'member_id' => $request->member_id,
             'amount' => $request->amount,
             'bank_name' =>  $request->bank_name,
-            'cnic' => $request->cnic,
             'reciept_date' => $request->reciept_date,
             'reciept_number' => $request->reciept_number
         ]);
@@ -56,24 +57,23 @@ class PaymentController extends Controller
 
     public function edit($id){
         $payment = Payment::find($id);
-        return view('admin/payments/payment_edit', compact('payment'));
+        $members = Membership::all();
+        return view('admin/payments/payment_edit', compact('payment', 'members'));
     }
 
     public function update(Request $request, $id){
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
+            'member_id' => ['required', 'integer'],
             'amount' => ['required', 'integer'],
             'bank_name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:14'],
             'reciept_date' => ['required', 'date'],
             'reciept_number' => ['required', 'string'],
         ]);
 
         $payment = Payment::find($id);
-        $payment->ifmp_id = $request->ifmp_id;
+        $payment->member_id = $request->member_id;
         $payment->amount = $request->amount;
         $payment->bank_name = $request->bank_name;
-        $payment->cnic = $request->cnic;
         $payment->reciept_date = $request->reciept_date;
         $payment->reciept_number = $request->reciept_number;
         $payment->save();
