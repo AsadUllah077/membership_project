@@ -104,8 +104,8 @@
                                            @foreach ($companies as $company)
                                            <tr>
                                              <td>{{$company->name}}</td>
-                                             <td>{{$company->t_active}}</td>
-                                             <td>{{$company->t_inactive}}</td>
+                                             <td>{{$active_users}}</td>
+                                             <td>{{$inactive_users}}</td>
                                              <td>{{$company->total_dues}}</td>
                                              <td>{{$company->total_paid}}</td>
                                              <td class="text-center">

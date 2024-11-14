@@ -12,4 +12,6 @@ class Company extends Model
         'phone',
         'sba'
     ];
+
+
 }

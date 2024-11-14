@@ -99,7 +99,7 @@ class PaymentController extends Controller
         "Expires" => "0"
     ];
 
-    $columns = ['IFMP-ID', 'Amount', 'Bank Name', 'CNIC', 'Receipt Date', 'Receipt Number'];
+    $columns = ['IFMP-ID', 'Bank Name', 'CNIC', 'Receipt Date', 'Receipt Number'];
 
     $callback = function () use ($payments, $columns) {
         $file = fopen('php://output', 'w');
@@ -108,9 +108,9 @@ class PaymentController extends Controller
         foreach ($payments as $payment) {
             fputcsv($file, [
                 $payment->ifmp_id,
-                $payment->amount,
+
                 $payment->bank_name,
-                $payment->cnic,
+                $payment->member->cnics,
                 $payment->receipt_date,
                 $payment->receipt_number,
             ]);
@@ -128,7 +128,6 @@ public function exportExcel()
     $sheet = $spreadsheet->getActiveSheet();
 
     $sheet->setCellValue('A1', 'IFMP-ID')
-        ->setCellValue('B1', 'Amount')
         ->setCellValue('C1', 'Bank Name')
         ->setCellValue('D1', 'CNIC')
         ->setCellValue('E1', 'Receipt Date')
@@ -139,7 +138,6 @@ public function exportExcel()
 
     foreach ($payments as $payment) {
         $sheet->setCellValue("A$row", $payment->ifmp_id)
-            ->setCellValue("B$row", $payment->amount)
             ->setCellValue("C$row", $payment->bank_name)
             ->setCellValue("D$row", $payment->cnic)
             ->setCellValue("E$row", $payment->receipt_date)

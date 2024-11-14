@@ -30,12 +30,12 @@
                     <td>{{ $member->ifmp_id }}</td>
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->cnic }}</td>
-                    <td>{{ $member->certificate ? $member->certificate->certification : 'N/A' }}</td>
+                    <td>{{ $member->certificates ? $member->certificates[0]->certification : 'N/A' }}</td>
                     <td>{{ $member->status }}</td>
                     <td>{{ $member->dues }}</td>
-                    <td>{{ $member->balance }}</td>
+                    <td>{{ $member->fees ? $member->fees->amount : 'N/A' }}</td>
                     <td>{{ $member->m_date }}</td>
-                    <td>{{ $member->valid_till }}</td>
+                    <td>{{ $member->certificates ? $member->certificates[0]->valid_till : 'N/A' }}</td>
                 </tr>
             @endforeach
         </tbody>

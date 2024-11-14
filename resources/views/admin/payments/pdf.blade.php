@@ -19,7 +19,7 @@
         <thead>
             <tr>
                 <th>IFMP-ID</th>
-                <th>Amount</th>
+
                 <th>Bank Name</th>
                 <th>CNIC</th>
                 <th>Receipt Date</th>
@@ -29,12 +29,11 @@
         <tbody>
             @foreach($payments as $payment)
                 <tr>
-                    <td>{{ $payment->ifmp_id }}</td>
-                    <td>{{ $payment->amount }}</td>
+                    <td>{{ $payment->member->ifmp_id }}</td>
                     <td>{{ $payment->bank_name }}</td>
-                    <td>{{ $payment->cnic }}</td>
-                    <td>{{ $payment->receipt_date }}</td>
-                    <td>{{ $payment->receipt_number }}</td>
+                    <td>{{ $payment->member->cnic }}</td>
+                    <td>{{ $payment->reciept_date }}</td>
+                    <td>{{ $payment->reciept_number }}</td>
                 </tr>
             @endforeach
         </tbody>

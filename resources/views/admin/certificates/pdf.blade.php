@@ -38,8 +38,8 @@
         <tbody>
             @foreach ($certifications as $certification)
                 <tr>
-                    <td>{{ $certification->ifmp_id }}</td>
-                    <td>{{ $certification->cnic }}</td>
+                    <td>{{ $certification->member->ifmp_id }}</td>
+                    <td>{{ $certification->member->cnic }}</td>
                     <td>{{ $certification->category }}</td>
                     <td>{{ $certification->certification }}</td>
                     <td>{{ $certification->valid_till }}</td>

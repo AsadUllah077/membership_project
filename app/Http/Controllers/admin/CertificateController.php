@@ -108,8 +108,8 @@ class CertificateController extends Controller
 
             foreach ($certifications as $certification) {
                 fputcsv($file, [
-                    $certification->ifmp_id,
-                    $certification->cnic,
+                    $certification->member->ifmp_id,
+                    $certification->member->cnic,
                     $certification->category,
                     $certification->certification,
                     $certification->valid_till,
@@ -138,8 +138,8 @@ class CertificateController extends Controller
         $row = 2;
 
         foreach ($certifications as $certification) {
-            $sheet->setCellValue("A$row", $certification->ifmp_id)
-                ->setCellValue("B$row", $certification->cnic)
+            $sheet->setCellValue("A$row", $certification->member->ifmp_id)
+                ->setCellValue("B$row", $certification->member->cnic)
                 ->setCellValue("C$row", $certification->category)
                 ->setCellValue("D$row", $certification->certification)
                 ->setCellValue("E$row", $certification->valid_till);

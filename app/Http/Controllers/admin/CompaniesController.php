@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Company;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Models\User;
+use App\Models\Company;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CompaniesController extends Controller
 {
@@ -20,10 +21,11 @@ class CompaniesController extends Controller
         if ($request->has('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-
+        $active_users = User::where('status', 'active')->count();
+        $inactive_users = User::where('status', 'inactive')->count();
         $companies = $query->paginate(10);
         // $companies = Company::paginate(10);
-        return view('admin/companies/index', compact('companies'));
+        return view('admin/companies/index', compact('companies','active_users','inactive_users'));
     }
 
     public function create()

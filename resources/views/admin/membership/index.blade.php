@@ -192,7 +192,9 @@
                                                 <td>
 
 
-
+                                                    @php
+                                                        $i=0;
+                                                    @endphp
                                                     @forelse ($member->certificates as $mc)
                                                         {{ $mc->certification }}
                                                         @if (!$loop->last)
@@ -204,7 +206,7 @@
 
                                                 </td>
                                                 <td>{{ $member->status }}</td>
-                                                <td>{{ $member->dues }}</td>
+                                                <td>{{ $member->fees ? $member->fees->amount  * $member->certificates->count(): ''   }}</td>
                                                 <td>{{ $member->fees ? $member->fees->amount : '' }}</td>
                                                 <td>{{ $member->m_date }}</td>
                                                 <td>

@@ -19,7 +19,7 @@
             @foreach($fees as $fee)
                 <tr>
                     <td>{{ $fee->id }}</td>
-                    <td>{{ $fee->cnic }}</td>
+                    <td>{{ $fee->member->cnic }}</td>
                     <td>{{ $fee->status }}</td>
                     <td>{{ $fee->amount }}</td>
                 </tr>

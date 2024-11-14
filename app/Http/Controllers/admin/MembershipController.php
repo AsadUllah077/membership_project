@@ -23,7 +23,7 @@ class MembershipController extends Controller
         $search = $request->input('search'); // Get the search input
 
         // Filter memberships based on search query
-        $membership = Membership::with('certificates','fees')->when($search, function ($query, $search) {
+        $membership = Membership::with('certificates', 'fees')->when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
             // Add more conditions as needed
         })->paginate(10);
@@ -142,12 +142,12 @@ class MembershipController extends Controller
                     $member->ifmp_id,
                     $member->name,
                     $member->cnic,
-                    $member->certificate ? $member->certificate->certification : 'N/A',
+                    $member->certificates ? $member->certificates[0]->certification : 'N/A',
                     $member->status,
                     $member->dues,
-                    $member->balance,
+                    $member->$member->fees ? $member->fees->amount : 'N/A',
                     $member->m_date,
-                    $member->valid_till,
+                    $member->certificates ? $member->certificates[0]->valid_till : 'N/A',
                 ]);
             }
 
@@ -171,19 +171,19 @@ class MembershipController extends Controller
             ->setCellValue('H1', 'M-Date')
             ->setCellValue('I1', 'Valid Till');
 
-        $memberships = Membership::all();
+        $memberships = Membership::with('fees')->get();
         $row = 2;
 
         foreach ($memberships as $member) {
             $sheet->setCellValue("A$row", $member->ifmp_id)
                 ->setCellValue("B$row", $member->name)
                 ->setCellValue("C$row", $member->cnic)
-                ->setCellValue("D$row", $member->certificate ? $member->certificate->certification : 'N/A')
+                ->setCellValue("D$row", $member->certificates ? $member->certificates[0]->certification : 'N/A')
                 ->setCellValue("E$row", $member->status)
                 ->setCellValue("F$row", $member->dues)
-                ->setCellValue("G$row", $member->balance)
+                ->setCellValue("G$row", $member->fees ? $member->fees->amount : 'N/A')
                 ->setCellValue("H$row", $member->m_date)
-                ->setCellValue("I$row", $member->valid_till);
+                ->setCellValue("I$row", $member->certificates ? $member->certificates[0]->valid_till : 'N/A');
             $row++;
         }
 

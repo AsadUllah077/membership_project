@@ -117,7 +117,7 @@ class FeesController extends Controller
             "Expires" => "0"
         ];
 
-        $columns = ['ID', 'Name', 'Status', 'Amount', 'Due Date', 'Paid Date'];
+        $columns = ['ID', 'Name', 'Status', 'Amount', 'fees_date', ''];
 
         $callback = function () use ($fees, $columns) {
             $file = fopen('php://output', 'w');
@@ -126,11 +126,11 @@ class FeesController extends Controller
             foreach ($fees as $fee) {
                 fputcsv($file, [
                     $fee->id,
-                    $fee->cnic,
+                    $fee->member->name,
                     $fee->status,
                     $fee->amount,
-                    $fee->due_date,
-                    $fee->paid_date,
+                    $fee->fees_date,
+
                 ]);
             }
 
@@ -150,8 +150,8 @@ class FeesController extends Controller
             ->setCellValue('B1', 'CNIC')
             ->setCellValue('C1', 'Status')
             ->setCellValue('D1', 'Amount')
-            ->setCellValue('E1', 'Due Date')
-            ->setCellValue('F1', 'Paid Date');
+            ->setCellValue('E1', 'fees_date');
+
 
         $fees = Fees::all();
         $row = 2;
@@ -159,11 +159,10 @@ class FeesController extends Controller
         // Fill in data
         foreach ($fees as $fee) {
             $sheet->setCellValue("A$row", $fee->id)
-                ->setCellValue("B$row", $fee->cnic)
+                ->setCellValue("B$row", $fee->member->cnic)
                 ->setCellValue("C$row", $fee->status)
                 ->setCellValue("D$row", $fee->amount)
-                ->setCellValue("E$row", $fee->due_date)
-                ->setCellValue("F$row", $fee->paid_date);
+                ->setCellValue("F$row", $fee->fees_date);
             $row++;
         }
 
