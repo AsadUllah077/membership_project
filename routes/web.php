@@ -11,10 +11,10 @@ use App\Http\Controllers\admin\MembershipController;
 use App\Http\Controllers\admin\CertificateController;
 
 
+Route::get('/', function () {
+    return view('admin.frontpage');
+})->name('admin.frontpage');
 Route::middleware(['guest'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.frontpage');
-    })->name('admin.frontpage');
 
     Route::get('/admin/login', function () {
         return view('login');

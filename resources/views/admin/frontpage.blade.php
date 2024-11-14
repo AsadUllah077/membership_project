@@ -118,7 +118,7 @@
                         <tr>
                             <td>${data.ifmp_id}</td>
                             <td>${data.name}</td>
-                            <td>${data.dues}</td>
+                            <td>${data.totalAmount}</td>
                             <td>${data.status}</td>
                             <td class="text-center"><button class="btn btn-outline-primary btn-sm">Pay Online</button></td>
                             <td class="text-center"><button class="btn btn-outline-success btn-sm">View Certificates</button></td>
