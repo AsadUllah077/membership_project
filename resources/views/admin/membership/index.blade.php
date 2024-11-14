@@ -189,13 +189,32 @@
                                                 <td>{{ $member->ifmp_id }}</td>
                                                 <td>{{ $member->name }}</td>
                                                 <td>{{ $member->cnic }}</td>
-                                                <td>{{ $member->certificate ? $member->certificate->certification : 'N/A' }}
+                                                <td>
+
+
+
+                                                    @forelse ($member->certificates as $mc)
+                                                        {{ $mc->certification }}
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @empty
+                                                        N/A
+                                                    @endforelse
+
                                                 </td>
                                                 <td>{{ $member->status }}</td>
                                                 <td>{{ $member->dues }}</td>
-                                                <td>{{ $member->balance }}</td>
+                                                <td>{{ $member->fees ? $member->fees->amount : '' }}</td>
                                                 <td>{{ $member->m_date }}</td>
-                                                <td>{{ $member->valid_till }}</td>
+                                                <td>
+                                                    @foreach ($member->certificates as $mc)
+                                                        {{ $mc->valid_till }}
+                                                        @if (!$loop->last)
+                                                            ,
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                                 <td class="text-center">
                                                     <a href="{{ route('admin.edit_membership', $member->id) }}">
                                                         <i class="fas fa-edit"></i>

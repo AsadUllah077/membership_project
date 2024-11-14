@@ -46,7 +46,7 @@ class FeesController extends Controller
     {
         // dd($request->all());
 
-        $validator = $request->validate(rule :[
+        $validator = $request->validate([
 
             'amount' => ['required', 'integer'],
             'fees_year' => ['required', 'date'],

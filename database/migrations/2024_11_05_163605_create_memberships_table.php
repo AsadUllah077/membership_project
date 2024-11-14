@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('ifmp_id');
             $table->string('name');
             $table->string('cnic');
-
-            $table->string('status');
-            $table->integer('dues');
-            $table->integer('balance');
+            $table->foreignId('company_id')->references('id')->on('companies');
+            $table->string('email')->unique();
+            $table->string('mobile');
+            $table->string('phone');
             $table->date('m_date');
-            $table->date('valid_till');
+            $table->string('sba');
             $table->timestamps();
         });
     }

@@ -54,24 +54,24 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="certificate_id" class="form-label">Certificates Dues</label>
-                        <select class="form-control form-select" name="certificate_id">
-                            <option value="" selected="" disabled="">select certificate</option>
-                            @foreach ($certificates as $certificate)
-                                <option value="{{ $certificate->id }}">{{ $certificate->certification }}</option>
+                        <label for="company_id" class="form-label"> Companies</label>
+                        <select class="form-control form-select" name="company_id">
+                            <option value="" selected="" disabled="">select company</option>
+                            @foreach ($companies as $compny)
+                                <option value="{{ $compny->id }}">{{ $compny->name }}</option>
                             @endforeach
                         </select>
-                        @error('certificate_id')
+                        @error('compny_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-control form-select" name="status">
+                        <label for="sba" class="form-label">SBA</label>
+                        <select class="form-control form-select" name="sba">
                             <option value="" disabled="" selected="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="psba">psba</option>
+                            <option value="nonpsba">nonpsba</option>
                         </select>
                         @error('status')
                             <div class="text-danger">{{ $message }}</div>
@@ -79,19 +79,19 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="dues" class="form-label">Dues</label>
-                        <input type="number" name="dues" id="dues" class="form-control"
-                            value="{{ old('dues') }}" required>
-                        @error('dues')
+                        <label for="mobile" class="form-label">Mobile</label>
+                        <input type="text" name="mobile" id="mobile" class="form-control"
+                            value="{{ old('mobile') }}" required>
+                        @error('mobile')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="balance" class="form-label">Balance</label>
-                        <input type="number" name="balance" id="balance" class="form-control"
-                            value="{{ old('balance') }}" required>
-                        @error('balance')
+                        <label for="email" class="form-label">email</label>
+                        <input type="text" name="email" id="email" class="form-control"
+                            value="{{ old('email') }}" required>
+                        @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -106,10 +106,10 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="valid_till" class="form-label">Valid Till</label>
-                        <input type="date" name="valid_till" id="valid_till" class="form-control"
-                            value="{{ old('valid_till') }}" required>
-                        @error('valid_till')
+                        <label for="phone" class="form-label">phone</label>
+                        <input type="text" name="phone" id="phone" class="form-control"
+                            value="{{ old('phone') }}" required>
+                        @error('phone')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

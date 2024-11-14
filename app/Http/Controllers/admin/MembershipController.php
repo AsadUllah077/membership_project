@@ -6,6 +6,8 @@ use App\Models\Membership;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Models\Fees;
 use App\Models\User;
 use PHPUnit\Framework\Attributes\Medium;
 
@@ -21,7 +23,7 @@ class MembershipController extends Controller
         $search = $request->input('search'); // Get the search input
 
         // Filter memberships based on search query
-        $membership = Membership::with('certificates')->when($search, function ($query, $search) {
+        $membership = Membership::with('certificates','fees')->when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
             // Add more conditions as needed
         })->paginate(10);
@@ -31,42 +33,44 @@ class MembershipController extends Controller
         $certificates = Certificate::all();
         $active_users = User::where('status', 'active')->count();
         $users = User::count();
+        $fees = Fees::all();
+        // dd($fees);
 
-        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search'));
+        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees'));
     }
 
 
 
     public function create()
     {
-        $certificates = Certificate::all();
-        return view('admin/membership/membership_create', compact('certificates'));
+        $companies = Company::all();
+        return view('admin/membership/membership_create', compact('companies'));
     }
 
     public function store(Request $request)
     {
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
-            'balance' => ['required', 'integer'],
-
-            'dues' => ['required', 'integer'],
+            'email' => ['required', 'string'],
+            'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15'],
             'm_date' => ['required', 'date'],
-            'valid_till' => ['required', 'date'],
-            'status' => ['required', 'string'],
+            'company_id' => ['required', 'integer'],
+            'phone' => ['required', 'string'],
+            'sba' => ['required', 'string'],
 
         ]);
         Membership::create([
             'ifmp_id' => $request->ifmp_id,
-            'balance' => $request->balance,
-
-            'dues' => $request->dues,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
             'name' => $request->name,
             'cnic' => $request->cnic,
             'm_date' => $request->m_date,
-            'valid_till' => $request->valid_till,
-            'status' => $request->status,
+            'company_id' => $request->company_id,
+            'phone' => $request->phone,
+            'sba' => $request->sba
         ]);
 
         return redirect()->route('admin.membership')->with('success', 'membership created successfully.');
@@ -83,26 +87,26 @@ class MembershipController extends Controller
     {
         $validator = $request->validate([
             'ifmp_id' => ['required', 'string', 'max:255'],
-            'balance' => ['required', 'integer'],
-
-            'dues' => ['required', 'integer'],
+            'email' => ['required', 'string'],
+            'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15'],
             'm_date' => ['required', 'date'],
-            'valid_till' => ['required', 'date'],
-            'status' => ['required', 'string'],
+            'company_id' => ['required', 'integer'],
+            'phone' => ['required', 'string'],
+            'sba' => ['required', 'string'],
         ]);
 
         $membership = Membership::find($id);
         $membership->ifmp_id = $request->ifmp_id;
-        $membership->balance = $request->balance;
-
+        $membership->email = $request->email;
+        $membership->mobile = $request->mobile;
         $membership->cnic = $request->cnic;
-        $membership->dues = $request->dues;
+        $membership->company_id = $request->company_id;
         $membership->name = $request->name;
         $membership->m_date = $request->m_date;
-        $membership->valid_till = $request->valid_till;
-        $membership->status = $request->status;
+        $membership->phone = $request->phone;
+        $membership->sba = $request->sba;
         $membership->save();
 
         return redirect()->route('admin.membership')->with('success', 'membership updated successfully.');

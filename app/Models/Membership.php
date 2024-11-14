@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Membership extends Model
 {
@@ -10,16 +11,29 @@ class Membership extends Model
         'ifmp_id',
         'name',
         'cnic',
-        'status',
-        'dues',
-        'balance',
+        'company_id',
+        'phone',
+        'mobile',
         'm_date',
-        'valid_till',
+        'email',
+        'sba'
     ];
 
 
-    public function certificates(){
-        return $this->hasMany(Certificate::class,'member_id');
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class, 'member_id');
+    }
+
+    public function fees()
+    {
+        return $this->hasOne(Fees::class, 'member_id');
+    }
+
+
+    public function company():BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
 }
