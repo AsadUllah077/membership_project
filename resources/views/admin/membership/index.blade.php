@@ -216,11 +216,11 @@
                                                 </td>
                                                 <td>
                                                     @php
-                                                        $totalAmount = 0;
+                                                        // $totalAmount = 0;
                                                         // Calculate the total amount from payments
-                                                        foreach ($member->payments as $pc) {
-                                                            $totalAmount += $pc->amount;
-                                                        }
+                                                        // foreach ($member->payments as $pc) {
+                                                        //     $totalAmount += $pc->amount;
+                                                        // }
 
                                                         // Calculate the fees amount multiplied by the certificate count
                                                         $feesAmount = $member->fees ? $member->fees->amount : 0;
@@ -228,7 +228,7 @@
                                                         $totalFees = $feesAmount * $certificateCount;
 
                                                         // Subtract total payments from total fees
-                                                        $remainingAmount = $totalFees - $totalAmount;
+                                                        $remainingAmount = $totalFees - $member->payments->sum('amount');
                                                     @endphp
 
                                                     {{ $remainingAmount > 0 ? $remainingAmount : 'N/A' }}
