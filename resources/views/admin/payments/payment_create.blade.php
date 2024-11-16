@@ -27,13 +27,13 @@
                 <div class="row">
                     <div class="mb-3 col-cl-4 col-md-6 col-sm-12 ">
                         <label for="member_select" class="form-label">Select Member</label>
-                        <select name="member_id" id="member_select" class="form-control" required>
+                        <select name="membership_id" id="member_select" class="form-control" required>
                             <option value="" disabled selected>Select a member</option>
                             @foreach ($members as $member)
                                 <option value="{{ $member->id }}">{{ $member->name }}</option>
                             @endforeach
                         </select>
-                        @error('member_id')
+                        @error('membership_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
@@ -56,14 +56,14 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-cl-4 col-md-6 col-sm-12">
+                    {{-- <div class="mb-3 col-cl-4 col-md-6 col-sm-12">
                         <label for="cnic" class="form-label">CNIC</label>
                         <input type="text" name="cnic" id="cnic" class="form-control"
                             value="{{ old('cnic') }}" required>
                         @error('cnic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3 col-cl-4 col-md-6 col-sm-12">
                         <label for="bank_name" class="form-label">Banke Name</label>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="mb-3 col-cl-4 col-md-6 col-sm-12">
-                        <label for="amount" class="form-label">Amount</label>
+                        <label for="amount" class="form-label">Paid Amount</label>
                         <input type="number" name="amount" id="amount" class="form-control"
                             value="{{ old('amount') }}" required>
                         @error('amount')

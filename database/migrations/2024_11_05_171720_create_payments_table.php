@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->references('id')->on('memberships');
+            $table->foreignId('membership_id')->references('id')->on('memberships');
             $table->string('bank_name');
             $table->date('reciept_date');
             $table->string('reciept_number');

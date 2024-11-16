@@ -36,8 +36,9 @@ class PaymentController extends Controller
     }
 
     public function store(Request $request){
+        // dd($request);
         $validator = $request->validate([
-            'member_id' => ['required', 'integer'],
+            'membership_id' => ['required', 'integer'],
             'amount' => ['required', 'integer'],
             'bank_name' => ['required', 'string', 'max:255'],
             'reciept_date' => ['required', 'date'],
@@ -45,7 +46,7 @@ class PaymentController extends Controller
 
         ]);
         Payment::create([
-            'member_id' => $request->member_id,
+            'membership_id' => $request->membership_id,
             'amount' => $request->amount,
             'bank_name' =>  $request->bank_name,
             'reciept_date' => $request->reciept_date,
@@ -63,7 +64,7 @@ class PaymentController extends Controller
 
     public function update(Request $request, $id){
         $validator = $request->validate([
-            'member_id' => ['required', 'integer'],
+            'membership_id' => ['required', 'integer'],
             'amount' => ['required', 'integer'],
             'bank_name' => ['required', 'string', 'max:255'],
             'reciept_date' => ['required', 'date'],
@@ -71,7 +72,7 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::find($id);
-        $payment->member_id = $request->member_id;
+        $payment->membership_id = $request->membership_id;
         $payment->amount = $request->amount;
         $payment->bank_name = $request->bank_name;
         $payment->reciept_date = $request->reciept_date;

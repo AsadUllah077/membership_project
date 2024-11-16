@@ -12,10 +12,10 @@ class Payment extends Model
         'reciept_number',
         'reciept_date',
         'bank_name',
-        'member_id'
+        'membership_id'
     ];
 
     public function member() :BelongsTo{
-        return $this->belongsTo(Membership::class,'member_id');
+        return $this->belongsTo(Membership::class,'membership_id');
     }
 }

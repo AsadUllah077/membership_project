@@ -123,11 +123,11 @@
             <div class="row g-4 mt-2">
 
                 @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
             </div>
             <div class="row mt-2">
@@ -214,7 +214,26 @@
                                                 <td>{{ $member->status }}</td>
                                                 <td>{{ $member->fees ? $member->fees->amount * $member->certificates->count() : '' }}
                                                 </td>
-                                                <td>{{ $member->fees ? $member->fees->amount : '' }}</td>
+                                                <td>
+                                                    @php
+                                                        $totalAmount = 0;
+                                                        // Calculate the total amount from payments
+                                                        foreach ($member->payments as $pc) {
+                                                            $totalAmount += $pc->amount;
+                                                        }
+
+                                                        // Calculate the fees amount multiplied by the certificate count
+                                                        $feesAmount = $member->fees ? $member->fees->amount : 0;
+                                                        $certificateCount = $member->certificates ? $member->certificates->count() : 0;
+                                                        $totalFees = $feesAmount * $certificateCount;
+
+                                                        // Subtract total payments from total fees
+                                                        $remainingAmount = $totalFees - $totalAmount;
+                                                    @endphp
+
+                                                    {{ $remainingAmount > 0 ? $remainingAmount : 'N/A' }}
+                                                </td>
+
                                                 <td>{{ $member->m_date }}</td>
                                                 <td>
                                                     @foreach ($member->certificates as $mc)

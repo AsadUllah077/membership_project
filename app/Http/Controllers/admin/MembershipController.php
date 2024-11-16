@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Fees;
+use App\Models\Payment;
 use App\Models\User;
 use PHPUnit\Framework\Attributes\Medium;
 
@@ -23,7 +24,7 @@ class MembershipController extends Controller
         $search = $request->input('search'); // Get the search input
 
         // Filter memberships based on search query
-        $membership = Membership::with('certificates', 'fees')->when($search, function ($query, $search) {
+        $membership = Membership::with('certificates', 'fees','payments')->when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
             // Add more conditions as needed
         })->paginate(10);
@@ -31,12 +32,14 @@ class MembershipController extends Controller
 
 
         $certificates = Certificate::all();
+        $payments = Payment::all();
+        // dd($payments);
         $active_users = User::where('status', 'active')->count();
         $users = User::count();
         $fees = Fees::all();
         // dd($fees);
 
-        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees'));
+        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees','payments'));
     }
 
 
@@ -85,7 +88,7 @@ class MembershipController extends Controller
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255', 'unique:memberships,ifmp_id'],
+            'ifmp_id' => ['required','regex:/^IFMP-\d{4}$/', 'string', 'max:255', 'unique:memberships,ifmp_id'],
             'email' => ['required', 'string', 'email', 'unique:memberships,email'],
             'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],

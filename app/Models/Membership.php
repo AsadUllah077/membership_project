@@ -31,9 +31,8 @@ class Membership extends Model
     }
 
 
-    public function company():BelongsTo
+    public function payments()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->hasMany(Payment   ::class);
     }
-
 }
