@@ -22,6 +22,7 @@
         <!-- Navbar End -->
 
 
+
         <!-- Sale & Revenue Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
@@ -121,7 +122,12 @@
             </div>
             <div class="row g-4 mt-2">
 
-
+                @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
             </div>
             <div class="row mt-2">
@@ -193,7 +199,7 @@
 
 
                                                     @php
-                                                        $i=0;
+                                                        $i = 0;
                                                     @endphp
                                                     @forelse ($member->certificates as $mc)
                                                         {{ $mc->certification }}
@@ -206,7 +212,8 @@
 
                                                 </td>
                                                 <td>{{ $member->status }}</td>
-                                                <td>{{ $member->fees ? $member->fees->amount  * $member->certificates->count(): ''   }}</td>
+                                                <td>{{ $member->fees ? $member->fees->amount * $member->certificates->count() : '' }}
+                                                </td>
                                                 <td>{{ $member->fees ? $member->fees->amount : '' }}</td>
                                                 <td>{{ $member->m_date }}</td>
                                                 <td>

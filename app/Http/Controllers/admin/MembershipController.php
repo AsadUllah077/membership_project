@@ -50,16 +50,15 @@ class MembershipController extends Controller
     public function store(Request $request)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string'],
+            'ifmp_id' => ['required', 'string', 'max:255', 'unique:memberships,ifmp_id'],
+            'email' => ['required', 'string', 'email', 'unique:memberships,email'],
             'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15'],
+            'cnic' => ['required', 'string', 'max:15','regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],
             'sba' => ['required', 'string'],
-
         ]);
         Membership::create([
             'ifmp_id' => $request->ifmp_id,
@@ -86,11 +85,11 @@ class MembershipController extends Controller
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string'],
+            'ifmp_id' => ['required', 'string', 'max:255', 'unique:memberships,ifmp_id'],
+            'email' => ['required', 'string', 'email', 'unique:memberships,email'],
             'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15'],
+            'cnic' => ['required', 'string', 'max:15','regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],

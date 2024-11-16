@@ -70,8 +70,8 @@
                         <label for="sba" class="form-label">SBA</label>
                         <select class="form-control form-select" name="sba">
                             <option value="" disabled="" selected="">Select Status</option>
-                            <option value="psba">psba</option>
-                            <option value="nonpsba">nonpsba</option>
+                            <option value="psba">PSBA</option>
+                            <option value="nonpsba">Non-PSBA</option>
                         </select>
                         @error('status')
                             <div class="text-danger">{{ $message }}</div>
