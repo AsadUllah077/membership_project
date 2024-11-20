@@ -54,14 +54,18 @@ class MembershipController extends Controller
     {
         $validator = $request->validate([
             'ifmp_id' => [
-    'required',
-    'string',
-    'max:255',
-    'unique:memberships,ifmp_id',
-    'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
-],
+                'required',
+                'string',
+                'max:255',
+                'unique:memberships,ifmp_id',
+                'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
+            ],
             'email' => ['required', 'string', 'email', 'unique:memberships,email'],
-            'mobile' => ['required', 'string'],
+            'mobile' => [
+                'required',
+                'string',
+                'regex:/^03\d{9}$/',  // Ensures it starts with 03 followed by exactly 9 digits
+            ],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
@@ -89,21 +93,25 @@ class MembershipController extends Controller
         $membership = Membership::find($id);
         $certificates = Certificate::all();
         $companies = Company::all();
-        return view('admin/membership/membership_edit', compact('certificates', 'membership','companies'));
+        return view('admin/membership/membership_edit', compact('certificates', 'membership', 'companies'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-           'ifmp_id' => [
-    'required',
-    'string',
-    'max:255',
-    'unique:memberships,ifmp_id',
-    'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
-],
+            'ifmp_id' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:memberships,ifmp_id',
+                'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
+            ],
             'email' => ['required', 'string', 'email'],
-            'mobile' => ['required', 'string'],
+            'mobile' => [
+                'required',
+                'string',
+                'regex:/^03\d{9}$/',  // Ensures it starts with 03 followed by exactly 9 digits
+            ],
             'name' => ['required', 'string', 'max:255'],
             'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
