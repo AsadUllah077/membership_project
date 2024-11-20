@@ -39,9 +39,14 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="membership" class="form-label">Membership Status</label>
+                        <label for="membership" class="form-label">Fees Year Till</label>
                         <select name="fees" id="membership" class="form-control" required>
                             <option value="" disabled selected>Select membership status</option>
+                            <option value="membership-renewal-2019">Membership Renewal 2019</option>
+                            <option value="membership-renewal-2020">Membership Renewal 2020</option>
+                            <option value="membership-renewal-2021">Membership Renewal 2021</option>
+                            <option value="membership-renewal-2022">Membership Renewal 2022</option>
+                            <option value="membership-renewal-2023">Membership Renewal 2023</option>
                             <option value="membership-renewal-2024">Membership Renewal 2024</option>
                             <option value="membership-renewal-2025">Membership Renewal 2025</option>
                             <option value="membership-renewal-2026">Membership Renewal 2026</option>
@@ -49,6 +54,17 @@
                             <option value="membership-renewal-2028">Membership Renewal 2028</option>
                             <option value="membership-renewal-2029">Membership Renewal 2029</option>
                             <option value="membership-renewal-2030">Membership Renewal 2030</option>
+                            <option value="membership-renewal-2031">Membership Renewal 2031</option>
+                            <option value="membership-renewal-2032">Membership Renewal 2032</option>
+                            <option value="membership-renewal-2033">Membership Renewal 2033</option>
+                            <option value="membership-renewal-2034">Membership Renewal 2034</option>
+                            <option value="membership-renewal-2035">Membership Renewal 2035</option>
+                            <option value="membership-renewal-2036">Membership Renewal 2036</option>
+                            <option value="membership-renewal-2037">Membership Renewal 2037</option>
+                            <option value="membership-renewal-2038">Membership Renewal 2038</option>
+                            <option value="membership-renewal-2039">Membership Renewal 2039</option>
+                            <option value="membership-renewal-2040">Membership Renewal 2040</option>
+
                         </select>
                         @error('fees')
                             <div class="text-danger">{{ $message }}</div>
@@ -65,19 +81,20 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="amount" class="form-label">Amount</label>
-                        <input type="number" name="amount" id="amount" class="form-control"
-                            value="{{ old('amount') }}" required>
-                        @error('amount')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="fees_date" class="form-label">Fees Date</label>
                         <input type="date" name="fees_date" id="fees_date" class="form-control" required>
                         @error('fees_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" id="amount" class="form-control"
+                            value="{{ old('amount') }}" required>
+                        @error('amount')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

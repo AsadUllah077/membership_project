@@ -9,6 +9,7 @@ use App\Models\Membership;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -41,9 +42,16 @@ class CertificateController extends Controller
         $validator = $request->validate([
             'member_id' => ['required', 'integer'],
             'category' => ['required', 'string'],
-            'certification' => ['required', 'string'],
-            'valid_till' => ['required'],
-
+            'certification' => [
+                'required',
+                'string',
+                Rule::unique('certificates') // Ensure uniqueness
+                    ->where(function ($query) use ($request) {
+                        return $query->where('member_id', $request->member_id)
+                                     ->where('certification', $request->certification);
+                    }),
+            ],
+            'valid_till' => ['required', 'date'],
         ]);
 
         Certificate::create([
@@ -68,8 +76,16 @@ class CertificateController extends Controller
         $validator = $request->validate([
             'member_id' => ['required', 'integer'],
             'category' => ['required', 'string'],
-            'certification' => ['required', 'string'],
-            'valid_till' => ['required'],
+            'certification' => [
+                'required',
+                'string',
+                Rule::unique('certificates') // Ensure uniqueness
+                    ->where(function ($query) use ($request) {
+                        return $query->where('member_id', $request->member_id)
+                                     ->where('certification', $request->certification);
+                    }),
+            ],
+            'valid_till' => ['required', 'date'],
         ]);
         $certificate = Certificate::find($id);
         $certificate->member_id = $request->member_id;

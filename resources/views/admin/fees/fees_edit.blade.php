@@ -42,14 +42,12 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="membership" class="form-label">Membership Status</label>
+                        <label for="membership" class="form-label">Fees Year Till</label>
                         <select name="fees" id="membership" class="form-control" required>
                             <option value="" disabled>Select membership status</option>
-                            @foreach (['membership-renewal-2024', 'membership-renewal-2025', 'membership-renewal-2026',
-                                       'membership-renewal-2027', 'membership-renewal-2028', 'membership-renewal-2029',
-                                       'membership-renewal-2030'] as $status)
-                                <option value="{{ $status }}" {{ $fees->fees == $status ? 'selected' : '' }}>
-                                    {{ ucfirst(str_replace('-', ' ', $status)) }}
+                            @foreach (range(2019, 2040) as $year)
+                                <option value="membership-renewal-{{ $year }}" {{ $fees->fees == "membership-renewal-$year" ? 'selected' : '' }}>
+                                    {{ ucfirst(str_replace('-', ' ', "membership-renewal-$year")) }}
                                 </option>
                             @endforeach
                         </select>
@@ -57,6 +55,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="fees_year" class="form-label">Fees Year</label>
@@ -67,20 +66,21 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="amount" class="form-label">Amount</label>
-                        <input type="number" name="amount" id="amount" class="form-control"
-                               value="{{ old('amount', $fees->amount) }}" required>
-                        @error('amount')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="fees_date" class="form-label">Fees Date</label>
                         <input type="date" name="fees_date" id="fees_date" class="form-control"
                                value="{{ old('fees_date', $fees->fees_date) }}" required>
                         @error('fees_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" id="amount" class="form-control"
+                               value="{{ old('amount', $fees->amount) }}" required>
+                        @error('amount')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>

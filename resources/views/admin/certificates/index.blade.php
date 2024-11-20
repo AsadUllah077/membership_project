@@ -97,7 +97,7 @@
                                     <table class="table table-bordered table-hover">
                                       <thead>
                                         <tr>
-                                           <th>DATE</th>
+                                           <th>ISSUE DATE</th>
                                            <th>IFMP-ID</th>
                                            <th>CNIC</th>
                                            <th>CATEGORY</th>
@@ -122,12 +122,12 @@
                                           </tr> --}}
                                           @foreach ($certificates as $certificate)
                                               <tr>
-                                                <td>{{ $certificate->created_at->format('d-m-Y') }}</td>
+                                                <td>{{ $certificate->valid_till }}</td>
                                                 <td>{{ $certificate->member->ifmp_id }}</td>
                                                 <td>{{ $certificate->member->cnic }}</td>
                                                 <td>{{ $certificate->category }}</td>
                                                 <td>{{ $certificate->certification }}</td>
-                                                <td>{{ $certificate->valid_till }}</td>
+                                                <td></td>
                                                 <td class="text-center">
                                                     <a href="{{route('admin.delete_certificate',$certificate->id)}}" class="btn-danger btn-sm mrg"
                                                        data-placement="top" data-toggle="tooltip"

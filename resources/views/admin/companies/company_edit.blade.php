@@ -19,53 +19,54 @@
         @include('admin-layouts.navbar')
         <!-- Navbar End -->
 
-        {{-- Add user form --}}
+        {{-- Edit company form --}}
         <div class="container mt-4">
-            <h3>Add New Companies</h3>
-            <form action="{{ route('admin.update_company',$company->id) }}" method="POST">
+            <h3>Edit Company</h3>
+            <form action="{{ route('admin.update_company', $company->id) }}" method="POST">
                 @csrf
+                @method('PUT')
+                <div class="row">
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" id="name" class="form-control"
+                            value="{{ old('name', $company->name) }}" required>
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ $company->name }}" required>
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            value="{{ old('email', $company->email) }}" required>
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="sba" class="form-label">SBA</label>
+                        <select name="sba" id="sba" class="form-control" required>
+                            <option value="" disabled>Select SBA</option>
+                            <option value="PSBA" {{ old('sba', $company->sba) == 'PSBA' ? 'selected' : '' }}>PSBA</option>
+                            <option value="Non-PSBA" {{ old('sba', $company->sba) == 'Non-PSBA' ? 'selected' : '' }}>Non-PSBA</option>
+                        </select>
+                        @error('sba')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="number" name="phone" id="phone" class="form-control"
+                            value="{{ old('phone', $company->phone) }}" required>
+                        @error('phone')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="t_active" class="form-label">T-Active</label>
-                    <input type="number" name="t_active" id="t_active" class="form-control" value="{{ $company->t_active }}" required>
-                    @error('t_active')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="t_inactive" class="form-label">T-inActive</label>
-                    <input type="number" name="t_inactive" id="t_inactive" class="form-control" value="{{ $company->t_inactive }}" required>
-                    @error('t_inactive')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="total_dues" class="form-label">Total Dues</label>
-                    <input type="number" name="total_dues" id="total_dues" class="form-control" value="{{ $company->total_dues }}" required>
-                    @error('total_dues')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="total_paid" class="form-label">Total Paid</label>
-                    <input type="number" name="total_paid" id="total_paid" class="form-control" value="{{ $company->total_paid}}" required>
-                    @error('total_paid')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-primary">Add Company</button>
+                <button type="submit" class="btn btn-primary">Update Company</button>
             </form>
         </div>
 

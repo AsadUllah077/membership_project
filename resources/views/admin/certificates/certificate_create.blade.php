@@ -42,12 +42,18 @@
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="category" class="form-label">Category</label>
-                        <input type="text" name="category" id="category" class="form-control"
-                            value="{{ old('category') }}" required>
+                        <select name="category" id="category" class="form-control" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="GF" {{ old('category') == 'GF' ? 'selected' : '' }}>GF</option>
+                            <option value="Exame" {{ old('category') == 'Exame' ? 'selected' : '' }}>Exame</option>
+                            <option value="Insurance" {{ old('category') == 'Insurance' ? 'selected' : '' }}>Insurance</option>
+                            <option value="Other" {{ old('category') == 'Other' ? 'selected' : '' }}>Other</option>
+                        </select>
                         @error('category')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="certification" class="form-label">Certificate</label>
@@ -59,7 +65,7 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="valid_till" class="form-label">Valid Till</label>
+                        <label for="valid_till" class="form-label">Issue Date</label>
                         <input type="date" name="valid_till" id="valid_till" class="form-control"
                             value="{{ old('valid_till') }}" required>
                         @error('valid_till')

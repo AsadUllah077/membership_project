@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/companies/delete/{id}', [CompaniesController::class, 'delete'])->name('admin.delete_company');
     Route::get('/admin/companies/edit/{id}', [CompaniesController::class, 'edit'])->name('admin.edit_company');
     Route::post('/admin/companies/store', [CompaniesController::class, 'store'])->name('admin.store_company');
-    Route::post('/admin/companies/update/{id}', [CompaniesController::class, 'update'])->name('admin.update_company');
+    Route::put('/admin/companies/update/{id}', [CompaniesController::class, 'update'])->name('admin.update_company');
 
 
     //export routs

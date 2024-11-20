@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('certification');
             $table->date('valid_till');
             $table->timestamps();
+            $table->unique(['member_id', 'certification'], 'unique_certificate_per_user');
         });
     }
 

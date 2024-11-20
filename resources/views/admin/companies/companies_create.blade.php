@@ -44,6 +44,17 @@
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="sba" class="form-label">SBA</label>
+                        <select name="sba" id="sba" class="form-control" required>
+                            <option value="" disabled>Select SBA</option>
+                            <option value="PSBA" {{ old('sba') == 'PSBA' ? 'selected' : '' }}>PSBA</option>
+                            <option value="Non-PSBA" {{ old('sba') == 'Non-PSBA' ? 'selected' : '' }}>Non-PSBA</option>
+                        </select>
+                        @error('sba')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="number" name="phone" id="phone" class="form-control"
                             value="{{ old('phone') }}" required>
@@ -52,14 +63,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="sba" class="form-label">SBA</label>
-                        <input type="string" name="sba" id="sba" class="form-control"
-                            value="{{ old('sba') }}" required>
-                        @error('sba')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
+
                 </div>
 
 
