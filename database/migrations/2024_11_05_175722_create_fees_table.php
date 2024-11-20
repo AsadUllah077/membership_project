@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
-            $table->string('fees_year');
+            $table->integer('fees_year');
             $table->date('fees_date');
             $table->integer('amount');
             $table->string('status')->default('unpaid');

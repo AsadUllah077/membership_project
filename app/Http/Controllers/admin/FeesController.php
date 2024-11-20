@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -36,26 +37,34 @@ class FeesController extends Controller
         return view('admin.fees.index', compact('fees', 'all_fees', 'paid_fees', 'unpaid_fees'));
     }
 
-    public function create() : View
+    public function create(): View
     {
         $members = Membership::all();
         return view('admin/fees/fees_create', compact('members'));
     }
 
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         // dd($request->all());
 
-        $validator = $request->validate([
+        $year = Carbon::parse($request->input('fees_year'))->year; // Extract year from input
 
+        $validator = $request->validate([
             'amount' => ['required', 'integer'],
-            'fees_year' => ['required', 'date'],
+            'fees_year' => [
+                'required',
+                'string', // Match the schema type
+                Rule::unique('fees', 'fees_year') // Ensure unique for 'fees_year' column
+                    ->where(function ($query) use ($request, $year) {
+                        return $query->where('member_id', $request->member_id)
+                            ->where('fees_year', $year); // Compare year as a string
+                    }),
+            ],
             'fees_date' => ['required', 'date'],
             'member_id' => ['required', 'integer'],
             'fees' => ['required', 'string'],
-
         ]);
-        $year = Carbon::parse($request->input('fees_year'))->year;
+
         Fees::create([
             'fees_date' => $request->fees_date,
             'amount' => $request->amount,
@@ -72,16 +81,23 @@ class FeesController extends Controller
         $fees = Fees::find($id);
         $members = Membership::all();
         return view('admin/fees/fees_edit', compact('fees', 'members'));
-
-
     }
 
     public function update(Request $request, $id)
     {
-        $validator = $request->validate([
+        $year = Carbon::parse($request->input('fees_year'))->year; // Extract year from input
 
+        $validator = $request->validate([
             'amount' => ['required', 'integer'],
-            'fees_year' => ['required', 'date'],
+            'fees_year' => [
+                'required',
+                'string', // Match the schema type
+                Rule::unique('fees', 'fees_year') // Ensure unique for 'fees_year' column
+                    ->where(function ($query) use ($request, $year) {
+                        return $query->where('member_id', $request->member_id)
+                            ->where('fees_year', $year); // Compare year as a string
+                    }),
+            ],
             'fees_date' => ['required', 'date'],
             'member_id' => ['required', 'integer'],
             'fees' => ['required', 'string'],
@@ -91,7 +107,7 @@ class FeesController extends Controller
 
         $fees->fees_date = $request->fees_date;
         $fees->amount = $request->amount;
-        $fees->fees_year = Carbon::parse($request->fees_year)->year;
+        $fees->fees_year = $year;
         $fees->member_id = $request->member_id;
         $fees->fees = $request->fees;
         $fees->save();
