@@ -116,7 +116,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/membership/delete/{id}', [MembershipController::class, 'delete'])->name('admin.delete_membership');
     Route::get('/admin/membership/edit/{id}', [MembershipController::class, 'edit'])->name('admin.edit_membership');
     Route::post('/admin/membership/store', [MembershipController::class, 'store'])->name('admin.store_membership');
-    Route::post('/admin/membership/update/{id}', [MembershipController::class, 'update'])->name('admin.update_membership');
+    Route::put('/admin/membership/update/{id}', [MembershipController::class, 'update'])->name('admin.update_membership');
 
 
 

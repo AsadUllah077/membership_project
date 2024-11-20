@@ -24,7 +24,7 @@ class MembershipController extends Controller
         $search = $request->input('search'); // Get the search input
 
         // Filter memberships based on search query
-        $membership = Membership::with('certificates', 'fees','payments')->when($search, function ($query, $search) {
+        $membership = Membership::with('certificates', 'fees', 'payments')->when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
             // Add more conditions as needed
         })->paginate(10);
@@ -39,25 +39,31 @@ class MembershipController extends Controller
         $fees = Fees::all();
         // dd($fees);
 
-        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees','payments'));
+        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees', 'payments'));
     }
 
 
 
     public function create()
     {
-        $companies = Company::all();
+        $companies = Membership::all();
         return view('admin/membership/membership_create', compact('companies'));
     }
 
     public function store(Request $request)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required', 'string', 'max:255', 'unique:memberships,ifmp_id'],
+            'ifmp_id' => [
+    'required',
+    'string',
+    'max:255',
+    'unique:memberships,ifmp_id',
+    'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
+],
             'email' => ['required', 'string', 'email', 'unique:memberships,email'],
             'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15','regex:/^\d{5}-\d{7}-\d{1}$/',],
+            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],
@@ -82,17 +88,24 @@ class MembershipController extends Controller
     {
         $membership = Membership::find($id);
         $certificates = Certificate::all();
-        return view('admin/membership/membership_edit', compact('certificates', 'membership'));
+        $companies = Company::all();
+        return view('admin/membership/membership_edit', compact('certificates', 'membership','companies'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = $request->validate([
-            'ifmp_id' => ['required','regex:/^IFMP-\d{4}$/', 'string', 'max:255', 'unique:memberships,ifmp_id'],
-            'email' => ['required', 'string', 'email', 'unique:memberships,email'],
+           'ifmp_id' => [
+    'required',
+    'string',
+    'max:255',
+    'unique:memberships,ifmp_id',
+    'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
+],
+            'email' => ['required', 'string', 'email'],
             'mobile' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15','regex:/^\d{5}-\d{7}-\d{1}$/',],
+            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/',],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],
