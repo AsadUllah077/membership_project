@@ -113,7 +113,7 @@ class MembershipController extends Controller
                 'regex:/^03\d{9}$/',  // Ensures it starts with 03 followed by exactly 9 digits
             ],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/',],
+            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:memberships,cnic'],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],

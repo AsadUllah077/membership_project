@@ -19,19 +19,19 @@
         @include('admin-layouts.navbar')
         <!-- Navbar End -->
 
-        {{-- Edit user form --}}
+        {{-- Add user form --}}
         <div class="container mt-4">
-            <h3>Edit Membership</h3>
-            <form action="{{ route('admin.update_membership', $membership->id) }}" method="POST">
+            <h3>Add New Membership</h3>
+            <form action="{{ route('admin.store_membership') }}" method="POST">
                 @csrf
-                @method('PUT') <!-- This tells Laravel that the form is using the PUT method -->
 
                 <div class="row">
+
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="ifmp_id" class="form-label">Ifmp Id</label>
                         <input type="string" name="ifmp_id" id="ifmp_id" class="form-control" placeholder="IFMP-0000"
-                            value="{{ old('ifmp_id', $membership->ifmp_id) }}" required>
+                            value="{{ old('ifmp_id') }}" required>
                         @error('ifmp_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -40,7 +40,7 @@
                     <div class="mb-3  col-xl-4 col-md-6 col-sm-12">
                         <label for="name" class="form-label">Full Name</label>
                         <input type="text" name="name" id="name" class="form-control"
-                            value="{{ old('name', $membership->name) }}" required>
+                            value="{{ old('name') }}" required>
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -49,77 +49,75 @@
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="cnic" class="form-label">CNIC</label>
                         <input type="text" name="cnic" id="cnic" class="form-control"
-                            value="{{ old('cnic', $membership->cnic) }}" required>
+                            value="{{ old('cnic') }}" required>
                         @error('cnic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">email</label>
                         <input type="text" name="email" id="email" class="form-control"
-                            value="{{ old('email', $membership->email) }}" required>
+                            value="{{ old('email') }}" required>
                         @error('email')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="mobile" class="form-label">Mobile</label>
                         <input type="text" name="mobile" id="mobile" class="form-control"
-                            value="{{ old('mobile', $membership->mobile) }}" required>
+                            value="{{ old('mobile') }}" required>
                         @error('mobile')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="phone" class="form-label">Phone</label>
+                        <label for="phone" class="form-label">phone</label>
                         <input type="text" name="phone" id="phone" class="form-control"
-                            value="{{ old('phone', $membership->phone) }}" required>
+                            value="{{ old('phone') }}" required>
                         @error('phone')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="m_date" class="form-label">Membership Date</label>
+                        <label for="m_date" class="form-label">M Date</label>
                         <input type="date" name="m_date" id="m_date" class="form-control"
-                            value="{{ old('m_date', $membership->m_date) }}" required>
+                            value="{{ old('m_date') }}" required>
                         @error('m_date')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="sba" class="form-label">SBA</label>
                         <select class="form-control form-select" name="sba">
-                            <option value="psba" {{ old('sba', $membership->sba) == 'psba' ? 'selected' : '' }}>PSBA</option>
-                            <option value="nonpsba" {{ old('sba', $membership->sba) == 'nonpsba' ? 'selected' : '' }}>Non-PSBA</option>
+                            <option value="" disabled="" selected="">Select Status</option>
+                            <option value="psba">PSBA</option>
+                            <option value="nonpsba">Non-PSBA</option>
                         </select>
-                        @error('sba')
+                        @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="company_id" class="form-label"> Companies</label>
+                        <select class="form-control form-select" name="company_id">
+                            <option value="" selected="" disabled="">select company</option>
+                            @foreach ($companies as $compny)
+                                <option value="{{ $compny->id }}">{{ $compny->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('compny_id')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
-                        <label for="company_id" class="form-label">Company</label>
-                        <select class="form-control form-select" name="company_id">
-                            <option value="" selected="" disabled="">Select Company</option>
-                            @foreach ($companies as $company)
-                                <option value="{{ $company->id }}" {{ old('company_id', $membership->company_id) == $company->id ? 'selected' : '' }}>
-                                    {{ $company->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('company_id')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+
+
+
 
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update Membership</button>
+                <button type="submit" class="btn btn-primary">Add Membership</button>
             </form>
         </div>
 
