@@ -46,7 +46,7 @@ class MembershipController extends Controller
 
     public function create()
     {
-        $companies = Membership::all();
+        $companies = Company::all();
         return view('admin/membership/membership_create', compact('companies'));
     }
 
