@@ -89,11 +89,7 @@ class CertificateController extends Controller
             'certification' => [
                 'required',
                 'string',
-                Rule::unique('certificates') // Ensure uniqueness
-                    ->where(function ($query) use ($request) {
-                        return $query->where('member_id', $request->member_id)
-                                     ->where('certification', $request->certification);
-                    }),
+
             ],
             'valid_till' => ['required', 'date'],
         ]);

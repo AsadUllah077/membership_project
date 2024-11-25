@@ -112,8 +112,8 @@ class MembershipController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'unique:memberships,ifmp_id',
-                'regex:/^IFMP-\d{4}$/',  // Updated to match the format IFMP-0000
+                'unique:memberships,ifmp_id,'.$id.',id',
+                'regex:/^IFMP-\d{4}$/'  // Updated to match the format IFMP-0000
             ],
             'email' => ['required', 'string', 'email'],
             'mobile' => [
@@ -122,7 +122,7 @@ class MembershipController extends Controller
                 'regex:/^03\d{9}$/',  // Ensures it starts with 03 followed by exactly 9 digits
             ],
             'name' => ['required', 'string', 'max:255'],
-            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:memberships,cnic'],
+            'cnic' => ['required', 'string', 'max:15', 'regex:/^\d{5}-\d{7}-\d{1}$/', 'unique:memberships,cnic,'.$id.',id'],
             'm_date' => ['required', 'date'],
             'company_id' => ['required', 'integer'],
             'phone' => ['required', 'string'],
