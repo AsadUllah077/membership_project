@@ -140,16 +140,16 @@
                             <form action="{{ route('admin.membership') }}" method="GET">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <input type="text" name="search" class="form-control" placeholder="Search by name"
-                                               value="{{ request('search') }}">
+                                        <input type="text" name="search" class="form-control"
+                                            placeholder="Search by name" value="{{ request('search') }}">
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="date" name="start_date" class="form-control" placeholder="Start Date"
-                                               value="{{ request('start_date') }}">
+                                        <input type="date" name="start_date" class="form-control"
+                                            placeholder="Start Date" value="{{ request('start_date') }}">
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="date" name="end_date" class="form-control" placeholder="End Date"
-                                               value="{{ request('end_date') }}">
+                                        <input type="date" name="end_date" class="form-control"
+                                            placeholder="End Date" value="{{ request('end_date') }}">
                                     </div>
                                     <div class="col-md-3">
                                         <button type="submit" class="btn btn-primary">Filter</button>
@@ -258,11 +258,14 @@
 
                                                         // Calculate the fees amount multiplied by the certificate count
                                                         $feesAmount = $member->fees ? $member->fees->amount : 0;
-                                                        $certificateCount = $member->certificates ? $member->certificates->count() : 0;
+                                                        $certificateCount = $member->certificates
+                                                            ? $member->certificates->count()
+                                                            : 0;
                                                         $totalFees = $feesAmount * $certificateCount;
 
                                                         // Subtract total payments from total fees
-                                                        $remainingAmount = $totalFees - $member->payments->sum('amount');
+                                                        $remainingAmount =
+                                                            $totalFees - $member->payments->sum('amount');
                                                     @endphp
 
                                                     {{ $remainingAmount > 0 ? $remainingAmount : 'N/A' }}
@@ -270,12 +273,18 @@
 
                                                 <td>{{ $member->m_date }}</td>
                                                 <td>
-                                                    @foreach ($member->certificates as $mc)
+                                                    {{ \Carbon\Carbon::parse($member->m_date)->addYear()->format('Y-m-d') }}
+                                                    {{-- @foreach ($member->certificates as $mc)
                                                         {{ $mc->valid_till }}
+
+                                                        @php
+                                                            $datasArray = explode('-', $mc->valid_till);
+                                                            print_r($datasArray);
+                                                        @endphp
                                                         @if (!$loop->last)
                                                             ,
                                                         @endif
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </td>
                                                 <td class="text-center">
                                                     <a href="{{ route('admin.edit_membership', $member->id) }}">
