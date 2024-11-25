@@ -16,16 +16,26 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class CertificateController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Certificate::query();
+{
+    $query = Certificate::query();
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-        $certificates = $query->paginate(10);
-        // $certificates = Certificate::paginate(10);
-        return view('admin/certificates/index', compact('certificates'));
+
+
+    // Filter by certificate
+    if ($request->has('certification') && $request->certification) {
+        $query->where('certification', 'like', '%' . $request->certification . '%');
     }
+
+    $certificates = $query->paginate(10);
+
+    return view('admin.certificates.index', [
+        'certificates' => $certificates,
+
+        'certification' => $request->certificate,
+        'search' => $request->search,
+    ]);
+}
+
 
 
 

@@ -137,29 +137,27 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body bg-light">
-                            <form id="validation-form123" action="{{ route('admin.membership') }}" method="GET">
+                            <form action="{{ route('admin.membership') }}" method="GET">
                                 <div class="row">
-                                    <div class="col-md-3 p-1">
-                                        <select class="form-control form-select" name="company" required="required">
-                                            <option value="" disabled="" selected="">Company</option>
-                                            <option value="HBL" {{ request('company') == 'HBL' ? 'selected' : '' }}>HBL</option>
-                                            <option value="NBP" {{ request('company') == 'NBP' ? 'selected' : '' }}>NBP</option>
-                                        </select>
+                                    <div class="col-md-3">
+                                        <input type="text" name="search" class="form-control" placeholder="Search by name"
+                                               value="{{ request('search') }}">
                                     </div>
-                                    <div class="col-md-2 p-1">
-                                        <input type="date" class="form-control" name="start_date"
-                                               value="{{ request('start_date') }}" placeholder="Start">
+                                    <div class="col-md-3">
+                                        <input type="date" name="start_date" class="form-control" placeholder="Start Date"
+                                               value="{{ request('start_date') }}">
                                     </div>
-                                    <div class="col-md-2 p-1">
-                                        <input type="date" class="form-control" name="end_date"
-                                               value="{{ request('end_date') }}" placeholder="End">
+                                    <div class="col-md-3">
+                                        <input type="date" name="end_date" class="form-control" placeholder="End Date"
+                                               value="{{ request('end_date') }}">
                                     </div>
-                                    <div class="col-md-2 p-1">
+                                    <div class="col-md-3">
                                         <button type="submit" class="btn btn-primary">Filter</button>
                                         <a href="{{ route('admin.membership') }}" class="btn btn-secondary">Reset</a>
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
