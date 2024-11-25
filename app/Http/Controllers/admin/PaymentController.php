@@ -15,18 +15,35 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->input('query');
+        $query = Payment::query();
 
-        if ($query) {
-            $payments = Payment::where('name', 'like', '%' . $query . '%')
-                ->orWhere('status', 'like', '%' . $query . '%')
-                ->orWhere('amount', 'like', '%' . $query . '%')
-                ->paginate(10);
-        } else {
-            $payments = Payment::paginate(10);
+        // Filter by query (search term)
+        if ($request->filled('query')) {
+            $query->where('name', 'like', '%' . $request->query . '%')
+                //   ->orWhere('status', 'like', '%' . $request->query . '%')
+                  ->orWhere('amount', 'like', '%' . $request->query . '%');
         }
 
-        return view('admin/payments/index', compact('payments', 'query'));
+        // Filter by bank name
+        if ($request->filled('bank_name')) {
+            $query->where('bank_name', 'like', '%' . $request->bank_name . '%');
+        }
+
+        // Filter by status
+        // if ($request->filled('status')) {
+        //     $query->where('status', $request->status);
+        // }
+
+        // Paginate results
+        $payments = $query->paginate(10);
+
+        // Return the view
+        return view('admin.payments.index', [
+            'payments' => $payments,
+            'query' => $request->query,
+            'status' => $request->status,
+            'bank_name' => $request->bank_name
+        ]);
     }
 
 

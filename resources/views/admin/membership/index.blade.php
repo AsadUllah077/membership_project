@@ -130,6 +130,42 @@
                 @endif
 
             </div>
+            <div class="row g-4 mt-2">
+
+
+                <!--===Filter===-->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body bg-light">
+                            <form id="validation-form123" action="{{ route('admin.membership') }}" method="GET">
+                                <div class="row">
+                                    <div class="col-md-3 p-1">
+                                        <select class="form-control form-select" name="company" required="required">
+                                            <option value="" disabled="" selected="">Company</option>
+                                            <option value="HBL" {{ request('company') == 'HBL' ? 'selected' : '' }}>HBL</option>
+                                            <option value="NBP" {{ request('company') == 'NBP' ? 'selected' : '' }}>NBP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 p-1">
+                                        <input type="date" class="form-control" name="start_date"
+                                               value="{{ request('start_date') }}" placeholder="Start">
+                                    </div>
+                                    <div class="col-md-2 p-1">
+                                        <input type="date" class="form-control" name="end_date"
+                                               value="{{ request('end_date') }}" placeholder="End">
+                                    </div>
+                                    <div class="col-md-2 p-1">
+                                        <button type="submit" class="btn btn-primary">Filter</button>
+                                        <a href="{{ route('admin.membership') }}" class="btn btn-secondary">Reset</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--===End Filter===-->
+            </div>
             <div class="row mt-2">
                 <div class="col-sm-12">
                     <div class="card bg-light">

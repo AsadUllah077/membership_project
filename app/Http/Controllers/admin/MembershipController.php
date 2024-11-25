@@ -20,27 +20,39 @@ use Dompdf\Options;
 class MembershipController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->input('search'); // Get the search input
+{
+    $search = $request->input('search');
+    // $company = $request->input('company');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
 
-        // Filter memberships based on search query
-        $membership = Membership::with('certificates', 'fees', 'payments')->when($search, function ($query, $search) {
-            return $query->where('name', 'like', "%{$search}%"); // Replace 'name' with the column you want to search by
-            // Add more conditions as needed
-        })->paginate(10);
-        // dd($membership);
+    // Filter memberships based on the search query and filters
+    $membership = Membership::with('certificates', 'fees', 'payments')
+        ->when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
+        // ->when($company, function ($query, $company) {
+        //     return $query->where('company', $company);
+        // })
+        ->when($startDate, function ($query, $startDate) {
+            return $query->whereDate('created_at', '>=', $startDate);
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->whereDate('created_at', '<=', $endDate);
+        })
+        ->paginate(10);
 
+    $certificates = Certificate::all();
+    $payments = Payment::all();
+    $active_users = User::where('status', 'active')->count();
+    $users = User::count();
+    $fees = Fees::all();
 
-        $certificates = Certificate::all();
-        $payments = Payment::all();
-        // dd($payments);
-        $active_users = User::where('status', 'active')->count();
-        $users = User::count();
-        $fees = Fees::all();
-        // dd($fees);
+    return view('admin/membership/index', compact(
+        'certificates', 'membership', 'active_users', 'users', 'search', 'fees', 'payments'
+    ));
+}
 
-        return view('admin/membership/index', compact('certificates', 'membership', 'active_users', 'users', 'search', 'fees', 'payments'));
-    }
 
 
 

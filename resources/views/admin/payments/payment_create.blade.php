@@ -83,7 +83,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Company</button>
+                <button type="submit" class="btn btn-primary">Add payment</button>
             </form>
         </div>
 
