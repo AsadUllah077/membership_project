@@ -16,25 +16,44 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class CertificateController extends Controller
 {
     public function index(Request $request)
-{
-    $query = Certificate::query();
+    {
+        $query = Certificate::query();
 
+        // Filter by certification
+        if ($request->has('certification') && $request->certification) {
+            $query->where('certification', 'like', '%' . $request->certification . '%');
+        }
+        if ($request->has('category') && $request->category) {
+            $query->where('category', 'like', '%' . $request->category . '%');
+        }
 
+        // Filter by category (searching by category name)
+        // if ($request->has('category') && $request->category) {
+        //     $query->whereHas('category', function ($q) use ($request) {
+        //         $q->where('category', 'like', '%' . $request->category . '%');
+        //     });
+        // }
 
-    // Filter by certificate
-    if ($request->has('certification') && $request->certification) {
-        $query->where('certification', 'like', '%' . $request->certification . '%');
+        // Filter by date range
+        if ($request->has('start_date') && $request->start_date) {
+            $query->whereDate('valid_till', '>=', $request->start_date);
+        }
+        if ($request->has('end_date') && $request->end_date) {
+            $query->whereDate('valid_till', '<=', $request->end_date);
+        }
+
+        $certificates = $query->paginate(10);
+
+        return view('admin.certificates.index', [
+            'certificates' => $certificates,
+            'certification' => $request->certification,
+            'category' => $request->category,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
     }
 
-    $certificates = $query->paginate(10);
 
-    return view('admin.certificates.index', [
-        'certificates' => $certificates,
-
-        'certification' => $request->certificate,
-        'search' => $request->search,
-    ]);
-}
 
 
 
