@@ -14,37 +14,41 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class PaymentController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Payment::query();
+{
+    // Initialize the query for payments
+    $query = Payment::query();
 
-        // Filter by query (search term)
-        if ($request->filled('query')) {
-            $query->where('name', 'like', '%' . $request->query . '%')
-                //   ->orWhere('status', 'like', '%' . $request->query . '%')
-                  ->orWhere('amount', 'like', '%' . $request->query . '%');
-        }
+    // Join with memberships table to access CNIC and IFMP-ID
+    $query->join('memberships', 'payments.membership_id', '=', 'memberships.id')
+          ->select('payments.*', 'memberships.cnic', 'memberships.ifmp_id'); // Select additional fields if needed
 
-        // Filter by bank name
-        if ($request->filled('bank_name')) {
-            $query->where('bank_name', 'like', '%' . $request->bank_name . '%');
-        }
-
-        // Filter by status
-        // if ($request->filled('status')) {
-        //     $query->where('status', $request->status);
-        // }
-
-        // Paginate results
-        $payments = $query->paginate(10);
-
-        // Return the view
-        return view('admin.payments.index', [
-            'payments' => $payments,
-            'query' => $request->query,
-            'status' => $request->status,
-            'bank_name' => $request->bank_name
-        ]);
+    // Filter by bank name
+    if ($request->filled('bank_name')) {
+        $query->where('payments.bank_name', 'like', '%' . $request->bank_name . '%');
     }
+
+    // Filter by CNIC
+    if ($request->filled('cnic')) {
+        $query->where('memberships.cnic', 'like', '%' . $request->cnic . '%');
+    }
+
+    // Filter by IFMP-ID
+    if ($request->filled('ifmp_id')) {
+        $query->where('memberships.ifmp_id', 'like', '%' . $request->ifmp_id . '%');
+    }
+
+    // Paginate results
+    $payments = $query->paginate(10);
+
+    // Return the view with filters and data
+    return view('admin.payments.index', [
+        'payments' => $payments,
+        'bank_name' => $request->bank_name,
+        'cnic' => $request->cnic,
+        'ifmp_id' => $request->ifmp_id,
+    ]);
+}
+
 
 
     public function create(){

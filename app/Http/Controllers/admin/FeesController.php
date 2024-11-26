@@ -18,32 +18,50 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class FeesController extends Controller
 {
     public function index(Request $request)
-{
-    // Initialize the query
-    $query = Fees::query();
+    {
+        // Initialize the query for fees
+        $query = Fees::query();
 
-    // Apply the status filter if it exists
-    if ($request->filled('status')) {
-        $query->where('status', $request->status);
+        // Join with membership table
+        $query->join('memberships', 'fees.member_id', '=', 'memberships.id')
+              ->select('fees.*', 'memberships.cnic', 'memberships.ifmp_id'); // Select additional fields if needed
+
+        // Apply filters
+        if ($request->filled('status')) {
+            $query->where('fees.status', $request->status);
+        }
+
+        if ($request->filled('certification')) {
+            $query->where('fees.certification', 'like', '%' . $request->certification . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('fees.category', 'like', '%' . $request->category . '%');
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('fees.created_at', [$request->start_date, $request->end_date]);
+        }
+
+        if ($request->filled('cnic')) {
+            $query->where('memberships.cnic', 'like', '%' . $request->cnic . '%');
+        }
+
+        if ($request->filled('ifmp_id')) {
+            $query->where('memberships.ifmp_id', 'like', '%' . $request->ifmp_id . '%');
+        }
+
+        // Fetch filtered data
+        $fees = $query->paginate(10);
+
+        // Counts
+        $all_fees = Fees::count();
+        $paid_fees = Fees::where('status', 'paid')->count();
+        $unpaid_fees = Fees::where('status', 'unpaid')->count();
+
+        // Return the view with data
+        return view('admin.fees.index', compact('fees', 'all_fees', 'paid_fees', 'unpaid_fees'));
     }
-
-    // Search functionality (optional)
-    if ($request->has('search')) {
-        $query->where('name', 'like', '%' . $request->search . '%')
-              ->orWhere('status', 'like', '%' . $request->search . '%');
-    }
-
-    // Fetch filtered data
-    $fees = $query->paginate(10);
-
-    // Counts
-    $all_fees = Fees::count();
-    $paid_fees = Fees::where('status', 'paid')->count();
-    $unpaid_fees = Fees::where('status', 'unpaid')->count();
-
-    // Return the view with data
-    return view('admin.fees.index', compact('fees', 'all_fees', 'paid_fees', 'unpaid_fees'));
-}
 
 
     public function create(): View

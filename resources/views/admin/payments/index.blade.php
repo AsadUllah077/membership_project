@@ -26,31 +26,40 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4 mt-2">
                     <!--===Filter===-->
-<div class="col-sm-12">
-    <div class="card">
-        <div class="card-body bg-light">
-            <form id="validation-form123" action="{{ route('admin.payment') }}" method="GET">
-                <div class="row">
-                    {{-- <div class="col-md-2 p-1">
-                        <select class="form-control form-select" name="status">
-                            <option value="" disabled selected>Status</option>
-                            <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid</option>
-                            <option value="unpaid" {{ request('status') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
-                        </select>
-                    </div> --}}
-                    <div class="col-md-3 p-1">
-                        <input type="text" class="form-control" name="bank_name" placeholder="Bank Name"
-                            value="{{ request('bank_name') }}">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body bg-light">
+                                <form id="validation-form123" action="{{ route('admin.payment') }}" method="GET">
+                                    <div class="row">
+                                        <!-- Bank Name Field -->
+                                        <div class="col-md-3 p-1">
+                                            <input type="text" class="form-control" name="bank_name" placeholder="Bank Name"
+                                                value="{{ request('bank_name') }}">
+                                        </div>
+
+                                        <!-- CNIC Field -->
+                                        <div class="col-md-3 p-1">
+                                            <input type="text" class="form-control" name="cnic" placeholder="CNIC"
+                                                value="{{ request('cnic') }}">
+                                        </div>
+
+                                        <!-- IFMP-ID Field -->
+                                        <div class="col-md-3 p-1">
+                                            <input type="text" class="form-control" name="ifmp_id" placeholder="IFMP-ID"
+                                                value="{{ request('ifmp_id') }}">
+                                        </div>
+
+                                        <!-- Submit and Reset Buttons -->
+                                        <div class="col-md-2 p-1">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                            <a href="{{ route('admin.payment') }}" class="btn btn-secondary">Reset</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 p-1">
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                        <a href="{{ route('admin.payment') }}" class="btn btn-secondary">Reset</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 <!--===End Filter===-->
 
                 </div>

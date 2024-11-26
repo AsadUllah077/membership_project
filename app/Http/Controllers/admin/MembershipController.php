@@ -28,7 +28,7 @@ class MembershipController extends Controller
         // Filter memberships based on the search query and m_date range
         $membership = Membership::with('certificates', 'fees', 'payments')
             ->when($search, function ($query, $search) {
-                return $query->where('name', 'like', "%{$search}%");
+                return $query->where('cnic', 'like', "%{$search}%");
             })
             ->when($startDate, function ($query, $startDate) {
                 return $query->whereDate('m_date', '>=', $startDate);

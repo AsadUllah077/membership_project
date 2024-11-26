@@ -163,18 +163,42 @@
                         <div class="card-body bg-light">
                             <form id="validation-form123" action="{{ route('admin.fees') }}" method="GET">
                                 <div class="row">
-                                    <div class="col-md-2 p-1">
-                                        <select class="form-control form-select" name="status">
-                                            <option value="" disabled selected>Status</option>
-                                            <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>
-                                                Paid</option>
-                                            <option value="unpaid"
-                                                {{ request('status') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
-                                        </select>
+                                    <!-- Certification Field -->
+                                    {{-- <div class="col-md-3 p-1">
+                                        <input type="text" class="form-control" name="certification" placeholder="Certificate"
+                                            value="{{ request('certification') }}">
                                     </div>
+
+                                    <!-- Category Input Field -->
+                                    <div class="col-md-3 p-1">
+                                        <input type="text" class="form-control" name="category" placeholder="Category"
+                                            value="{{ request('category') }}">
+                                    </div> --}}
+
+                                    <!-- CNIC Field -->
+                                    <div class="col-md-3 p-1">
+                                        <input type="text" class="form-control" name="cnic" placeholder="CNIC"
+                                            value="{{ request('cnic') }}">
+                                    </div>
+
+                                    <!-- IFMP-ID Field -->
+                                    <div class="col-md-3 p-1">
+                                        <input type="text" class="form-control" name="ifmp_id" placeholder="IFMP-ID"
+                                            value="{{ request('ifmp_id') }}">
+                                    </div>
+
+                                    <!-- Date Range -->
+                                    <div class="col-md-3 p-1">
+                                        <input type="date" class="form-control" name="start_date" value="{{ request('start_date') }}" placeholder="Start Date">
+                                    </div>
+                                    <div class="col-md-3 p-1">
+                                        <input type="date" class="form-control" name="end_date" value="{{ request('end_date') }}" placeholder="End Date">
+                                    </div>
+
+                                    <!-- Submit & Reset Buttons -->
                                     <div class="col-md-2 p-1">
                                         <button type="submit" class="btn btn-primary">Filter</button>
-                                        <a href="{{ route('admin.fees') }}" class="btn btn-secondary">Reset</a>
+                                        <a href="{{ route('admin.certification') }}" class="btn btn-secondary">Reset</a>
                                     </div>
                                 </div>
                             </form>
