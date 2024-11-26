@@ -169,7 +169,7 @@
                                                 <td>{{ $certificate->member->cnic }}</td>
                                                 <td>{{ $certificate->category }}</td>
                                                 <td>{{ $certificate->certification }}</td>
-                                                <td></td>
+                                                <td> {{ \Carbon\Carbon::parse($certificate->member->m_date)->addYear()->format('Y-m-d')  }}</td>
                                                 <td class="text-center">
                                                     <a href="{{route('admin.delete_certificate',$certificate->id)}}" class="btn-danger btn-sm mrg"
                                                        data-placement="top" data-toggle="tooltip"
