@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('fees_year');
             $table->date('fees_date');
+            $table->date('receipt_date');
             $table->integer('amount');
             $table->string('status')->default('unpaid');
             $table->string('fees');

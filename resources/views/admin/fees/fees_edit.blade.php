@@ -77,6 +77,14 @@
                         @enderror
                     </div>
                     <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
+                        <label for="receipt_date" class="form-label">Receipt  Date</label>
+                        <input type="date" name="receipt_date" id="receipt_date" class="form-control"
+                               value="{{ old('receipt_date', $fees->receipt_date) }}" required>
+                        @error('receipt_date')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3 col-xl-4 col-md-6 col-sm-12">
                         <label for="amount" class="form-label">Amount</label>
                         <input type="number" name="amount" id="amount" class="form-control"
                                value="{{ old('amount', $fees->amount) }}" required>

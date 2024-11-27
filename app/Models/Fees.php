@@ -10,6 +10,7 @@ class Fees extends Model
     protected $fillable = [
         'status',
         'fees_date',
+        'receipt_date',
         'fees',
         'amount',
         'fees_year',

@@ -88,12 +88,14 @@ class FeesController extends Controller
                     }),
             ],
             'fees_date' => ['required', 'date'],
+            'receipt_date' => ['required', 'date'],
             'member_id' => ['required', 'integer'],
             'fees' => ['required', 'string'],
         ]);
 
         Fees::create([
             'fees_date' => $request->fees_date,
+            'receipt_date' => $request->receipt_date,
             'amount' => $request->amount,
             'fees_year' =>  $year,
             'member_id' => $request->member_id,
@@ -126,12 +128,14 @@ class FeesController extends Controller
                     }),
             ],
             'fees_date' => ['required', 'date'],
+            'receipt_date' => ['required', 'date'],
             'member_id' => ['required', 'integer'],
             'fees' => ['required', 'string'],
         ]);
 
         $fees = Fees::find($id);
 
+        $fees->receipt_date = $request->receipt_date;
         $fees->fees_date = $request->fees_date;
         $fees->amount = $request->amount;
         $fees->fees_year = $year;
