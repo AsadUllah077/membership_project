@@ -230,8 +230,9 @@
                                             <th>CNIC</th>
                                             <th>Certification</th>
                                             <th>Status</th>
-                                            <th>Dues</th>
+                                            <th>Unpaid Amount</th>
                                             <th>Balance</th>
+                                            <th>Paid amount</th>
                                             <th>M-Date</th>
                                             <th>Vail Till</th>
                                             <th class="text-center">Action</th>
@@ -260,17 +261,20 @@
 
                                                 </td>
                                                 <td>{{ $member->status }}</td>
-                                                <td>{{ $member->fees ? $member->fees->amount * $member->certificates->count() : '' }}
-                                                </td>
                                                 <td>
                                                     @php
-                                                        // $totalAmount = 0;
-                                                        // Calculate the total amount from payments
-                                                        // foreach ($member->payments as $pc) {
-                                                        //     $totalAmount += $pc->amount;
-                                                        // }
+                                                        $feesAmount = $member->fees ? $member->fees->amount : 0;
+                                                        $certificateCount = $member->certificates ? $member->certificates->count() : 0;
+                                                        $totalFees = $feesAmount * $certificateCount;
+                                                        $totalPayments = $member->payments->sum('amount');
+                                                        $remainingFees = $totalFees - $totalPayments;
+                                                    @endphp
+                                                    {{ $remainingFees }}
+                                                </td>
 
-                                                        // Calculate the fees amount multiplied by the certificate count
+                                                <td>
+                                                    @php
+
                                                         $feesAmount = $member->fees ? $member->fees->amount : 0;
                                                         $certificateCount = $member->certificates
                                                             ? $member->certificates->count()
@@ -285,6 +289,7 @@
                                                     {{ $remainingAmount > 0 ? $remainingAmount : 'N/A' }}
                                                 </td>
 
+                                                <td>{{ $member->payments->sum('amount') }}</td>
                                                 <td>{{ $member->m_date }}</td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($member->m_date)->addYear()->format('Y-m-d') }}

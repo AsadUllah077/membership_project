@@ -31,6 +31,54 @@
                 </div>
             @endif
             <div class="row g-4 mt-2">
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card bg-primary">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-center text-white">
+                                        <h2>{{$gf_certificates_count}}</h2>
+                                        <span>GF certificates</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card bg-success">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-center text-white">
+                                        <h3>{{$exame_certificates_count}}</h3>
+                                        <span>Exam Certificates</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card bg-warning">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="media d-flex">
+                                    <div class="media-body text-center text-white">
+                                        <h3>{{$other_certificates_count}}</h3>
+                                        <span>Other Certificates</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!--===Filter===-->
                 <div class="col-sm-12">
                     <div class="card">

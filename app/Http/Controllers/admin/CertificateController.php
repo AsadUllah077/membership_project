@@ -43,13 +43,18 @@ class CertificateController extends Controller
         }
 
         $certificates = $query->paginate(10);
-
+        $gf_certificates_count = Certificate::where('category', 'GF')->count();
+        $other_certificates_count = Certificate::where('category', 'other')->count();
+        $exame_certificates_count = Certificate::where('category', 'Exam')->count();
         return view('admin.certificates.index', [
             'certificates' => $certificates,
             'certification' => $request->certification,
             'category' => $request->category,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
+            'gf_certificates_count' => $gf_certificates_count,
+            'other_certificates_count' => $other_certificates_count,
+            'exame_certificates_count' => $exame_certificates_count,
         ]);
     }
 
