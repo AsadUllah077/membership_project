@@ -35,4 +35,8 @@ class Membership extends Model
     {
         return $this->hasMany(Payment   ::class);
     }
+    public function company()
+{
+    return $this->belongsTo(Company::class, 'company_id');
+}
 }

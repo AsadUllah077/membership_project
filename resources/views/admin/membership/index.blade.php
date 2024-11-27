@@ -139,28 +139,42 @@
                         <div class="card-body bg-light">
                             <form action="{{ route('admin.membership') }}" method="GET">
                                 <div class="row">
+                                    <!-- Search by CNIC -->
                                     <div class="col-md-3">
-                                        <input type="text" name="search" class="form-control"
-                                            placeholder="Search by cnic" value="{{ request('search') }}">
+                                        <input type="text" name="search" class="form-control" placeholder="Search by CNIC" value="{{ request('search') }}">
                                     </div>
+
+                                    <!-- Search by Company -->
                                     <div class="col-md-3">
-                                        <input type="date" name="start_date" class="form-control"
-                                            placeholder="Start Date" value="{{ request('start_date') }}">
+                                        <input type="text" name="company" class="form-control" placeholder="Search by Company" value="{{ request('company') }}">
                                     </div>
+
+                                    <!-- Search by Certificate -->
                                     <div class="col-md-3">
-                                        <input type="date" name="end_date" class="form-control"
-                                            placeholder="End Date" value="{{ request('end_date') }}">
+                                        <input type="text" name="certificate" class="form-control" placeholder="Search by Certificate" value="{{ request('certificate') }}">
                                     </div>
+
+                                    <!-- Start Date -->
+                                    <div class="col-md-3">
+                                        <input type="date" name="start_date" class="form-control" placeholder="Start Date" value="{{ request('start_date') }}">
+                                    </div>
+
+                                    <!-- End Date -->
+                                    <div class="col-md-3">
+                                        <input type="date" name="end_date" class="form-control" placeholder="End Date" value="{{ request('end_date') }}">
+                                    </div>
+
+                                    <!-- Buttons -->
                                     <div class="col-md-3">
                                         <button type="submit" class="btn btn-primary">Filter</button>
                                         <a href="{{ route('admin.membership') }}" class="btn btn-secondary">Reset</a>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
+
 
                 <!--===End Filter===-->
             </div>

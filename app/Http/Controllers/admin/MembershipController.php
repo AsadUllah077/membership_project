@@ -20,34 +20,49 @@ use Dompdf\Options;
 class MembershipController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->input('search');
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
+{
+    $search = $request->input('search');
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+    $company = $request->input('company');
+    $certificate = $request->input('certificate');
 
-        // Filter memberships based on the search query and m_date range
-        $membership = Membership::with('certificates', 'fees', 'payments')
-            ->when($search, function ($query, $search) {
-                return $query->where('cnic', 'like', "%{$search}%");
-            })
-            ->when($startDate, function ($query, $startDate) {
-                return $query->whereDate('m_date', '>=', $startDate);
-            })
-            ->when($endDate, function ($query, $endDate) {
-                return $query->whereDate('m_date', '<=', $endDate);
-            })
-            ->paginate(10);
+    // Filter memberships based on the search query and other filters
+    $membership = Membership::with('certificates', 'fees', 'payments', 'company')
+        ->when($search, function ($query, $search) {
+            return $query->where('cnic', 'like', "%{$search}%");
+        })
+        ->when($startDate, function ($query, $startDate) {
+            return $query->whereDate('m_date', '>=', $startDate);
+        })
+        ->when($endDate, function ($query, $endDate) {
+            return $query->whereDate('m_date', '<=', $endDate);
+        })
+        ->when($company, function ($query, $company) {
+            // Assuming `company_id` is a foreign key and Company model has `name` field
+            return $query->whereHas('company', function ($subQuery) use ($company) {
+                $subQuery->where('name', 'like', "%{$company}%");
+            });
+        })
+        ->when($certificate, function ($query, $certificate) {
+            // Assuming `member_id` is a foreign key in `certificates` table
+            return $query->whereHas('certificates', function ($subQuery) use ($certificate) {
+                $subQuery->where('name', 'like', "%{$certificate}%");
+            });
+        })
+        ->paginate(10);
 
-        $certificates = Certificate::all();
-        $payments = Payment::all();
-        $active_users = User::where('status', 'active')->count();
-        $users = User::count();
-        $fees = Fees::all();
+    $certificates = Certificate::all();
+    $payments = Payment::all();
+    $active_users = User::where('status', 'active')->count();
+    $users = User::count();
+    $fees = Fees::all();
 
-        return view('admin.membership.index', compact(
-            'certificates', 'membership', 'active_users', 'users', 'search', 'fees', 'payments'
-        ));
-    }
+    return view('admin.membership.index', compact(
+        'certificates', 'membership', 'active_users', 'users', 'search', 'fees', 'payments'
+    ));
+}
+
 
 
 
